@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<l10n>
+    <description>
+<![CDATA[Displays a compass on the screen.
+Different position presets will be stored in Compass_Config.XML file.
+
+
+Decker_MMIV - fs-uk.com, forum.farming-simulator.com, modhoster.com]]>
+    </description>
+
+    <texts>
+        <text name="COMPASS_TOGGLE"     text="Compass position" />
+        
+        <text name="north"              text="N" />
+        <text name="northeast"          text="NE" />
+        <text name="east"               text="E" />
+        <text name="southeast"          text="SE" />
+        <text name="south"              text="S" />
+        <text name="southwest"          text="SW" />
+        <text name="west"               text="W" />
+        <text name="northwest"          text="NW" />
+    </texts>
+</l10n>
