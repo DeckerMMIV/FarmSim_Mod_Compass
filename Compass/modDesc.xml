@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
-<modDesc descVersion="9">
-    <author>Decker_MMIV</author>
+<modDesc descVersion="21">
+    <author>Freelance Modding Crew</author>
     
-    <version>1.4.1</version> <!-- http://semver.org/ -->
-
     <title>
         <en>Compass </en>
         <de>Kompass </de> <!-- http://translate.google.com, English to German -->
         <fr>Boussole</fr> <!-- http://translate.google.com, English to French -->
         <pl>Kompas  </pl> <!-- http://translate.google.com, English to Polish -->
     </title>
+    
+    <version>2.0.0</version> <!-- http://semver.org/ -->
+
     <description>
         <en>
 <![CDATA[Displays a compass on the screen.
+Different position presets will be stored in Compass_Config.XML file.
 
 
 Decker_MMIV - fs-uk.com, forum.farming-simulator.com, modhoster.com]]>
@@ -21,16 +23,19 @@ Decker_MMIV - fs-uk.com, forum.farming-simulator.com, modhoster.com]]>
 <![CDATA[Zeigt ein Kompass auf dem Bildschirm.
 
 
+
 Decker_MMIV - fs-uk.com, forum.farming-simulator.com, modhoster.com]]>
         </de>
         <fr> <!-- http://translate.google.com -->
 <![CDATA[Affiche une boussole à l'écran.
 
 
+
 Decker_MMIV - fs-uk.com, forum.farming-simulator.com, modhoster.com]]>
         </fr>
         <pl> <!-- http://translate.google.com -->
 <![CDATA[Wyświetla kompas na ekranie.
+
 
 
 Decker_MMIV - fs-uk.com, forum.farming-simulator.com, modhoster.com]]>
@@ -42,10 +47,10 @@ Decker_MMIV - fs-uk.com, forum.farming-simulator.com, modhoster.com]]>
 
     <l10n>
         <text name="COMPASS_TOGGLE">
-            <en>Compass on/off</en>
-            <de>Kompass auf/ab</de>
-            <fr>Boussole sur/de</fr>
-            <pl>Kompas na/poza</pl>
+            <en>Compass position</en>
+            <de>Kompass position</de>
+            <fr>Boussole position</fr>
+            <pl>Kompas position</pl>
         </text>
 <!--
 I hope the abbreviations of the world-corners are correct, in the languages that I do not understand, but found on Wikipedia:
