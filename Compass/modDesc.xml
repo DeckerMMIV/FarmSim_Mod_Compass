@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<modDesc descVersion="4">
+    <author>Decker</author>
+    <version>1.2</version>
+
+    <title>
+        <en>Compas for 'Steerable'</en>
+        <de>Compas für 'Steerable'</de> <!-- http://translate.google.com -->
+    </title>
+    <description>
+        <en>
+<![CDATA[Displays a compas on the screen.
+
+
+ls-uk.info, Decker_MMIV]]>
+        </en>
+        <de> <!-- http://translate.google.com -->
+<![CDATA[Zeigt ein Kompass auf dem Bildschirm.
+
+
+ls-uk.info, Decker_MMIV]]>
+        </de>
+    </description>
+
+    <iconFilename>store_Compas.png</iconFilename>
+    <multiplayer supported="true"/>
+
+    <l10n>
+        <text name="CompasHUD">
+            <en>Compas show/hide</en>
+            <de>Kompass auf/ab</de>
+        </text>
+<!--
+I hope the abbreviations of the world-corners are correct, in the languages that I do not understand, but found on Wikipedia:
+  DE    - http://de.wikipedia.org/wiki/Himmelsrichtung
+  CZ    - http://cs.wikipedia.org/wiki/Sv%C4%9Btov%C3%A1_strana
+  PL    - http://pl.wikipedia.org/wiki/Strony_%C5%9Bwiata
+  FR    - http://fr.wikipedia.org/wiki/Point_cardinal
+  ES    - http://es.wikipedia.org/wiki/Punto_cardinal
+  RU    - http://ru.wikipedia.org/wiki/%D0%A1%D1%82%D0%BE%D1%80%D0%BE%D0%BD%D1%8B_%D1%81%D0%B2%D0%B5%D1%82%D0%B0   (and more)
+  JP/JA - http://ja.wikipedia.org/wiki/%E6%96%B9%E4%BD%8D
+-->
+        <text name="north">     <en>N </en> <de>N </de> <cz>S </cz> <pl>N </pl> <fr>N </fr> <es>N </es> <ru>С </ru> <jp>北</jp>   </text>
+        <text name="northeast"> <en>NE</en> <de>NO</de> <cz>SV</cz> <pl>NE</pl> <fr>NE</fr> <es>NE</es> <ru>СВ</ru> <jp>北東</jp> </text>
+        <text name="east">      <en>E </en> <de>O </de> <cz>V </cz> <pl>E </pl> <fr>E </fr> <es>E </es> <ru>В </ru> <jp>東</jp>   </text>
+        <text name="southeast"> <en>SE</en> <de>SO</de> <cz>JV</cz> <pl>SE</pl> <fr>SE</fr> <es>SE</es> <ru>ЮВ</ru> <jp>南東</jp> </text>
+        <text name="south">     <en>S </en> <de>S </de> <cz>J </cz> <pl>S </pl> <fr>S </fr> <es>S </es> <ru>Ю </ru> <jp>南</jp>   </text>
+        <text name="southwest"> <en>SW</en> <de>SW</de> <cz>JZ</cz> <pl>SW</pl> <fr>SO</fr> <es>SO</es> <ru>ЮЗ</ru> <jp>南西</jp> </text>
+        <text name="west">      <en>W </en> <de>W </de> <cz>Z </cz> <pl>W </pl> <fr>O </fr> <es>O </es> <ru>З </ru> <jp>西</jp>   </text>
+        <text name="northwest"> <en>NW</en> <de>NW</de> <cz>SZ</cz> <pl>NW</pl> <fr>NO</fr> <es>NO</es> <ru>СЗ</ru> <jp>北西</jp> </text>
+        
+<!--        
+        <text name="OldVersionDetected">
+            <en>Remember to remove the 'Compas for AITractor/AICombine - v0.9(beta)'</en>
+        </text>
+-->        
+    </l10n>
+
+    <extraSourceFiles>
+        <sourceFile filename="Compas.lua" />
+    </extraSourceFiles>
+    
+    <inputBindings>    
+        <input name="CompasHUD" category="ONFOOT VEHICLE" key1="KEY_lalt KEY_c" key2="" button="" device="0" mouse="" />
+    </inputBindings>
+</modDesc>
