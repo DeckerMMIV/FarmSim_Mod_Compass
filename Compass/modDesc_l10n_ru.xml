@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <l10n>
     <description>
-<![CDATA[Displays a compass on the screen.
-Different position presets will be stored in Compass_Config.XML file.
+<![CDATA[Мод выводит на экран компас.
+Все заданные настройки положения будут храниться в файле Compass_Config.XML.
 
 
 Decker_MMIV - fs-uk.com, forum.farming-simulator.com, modhoster.com]]>
     </description>
 
     <texts>
-        <text name="COMPASS_TOGGLE"     text="Compass position" />
+        <text name="COMPASS_TOGGLE"     text="Положение компаса" />
         
         <text name="north"              text="С" />
         <text name="northeast"          text="СВ"  />
