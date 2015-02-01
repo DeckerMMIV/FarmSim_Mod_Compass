@@ -14,6 +14,9 @@
 --                   the compass should appear on the screen.
 --                - Save/load of compass position/size presets to ...\MODS\Compass_Config.XML file.
 --      v2.0.1    - Only create Compass_config.XML when 'client'.
+--  2015-February
+--      v2.0.3    - Override Drivable's draw() instead.
+--                - Suggestion from JakobT to use modulo operator to get proper 0.0 - 360.0 values.
 --
 
 Compass = {};
@@ -391,10 +394,11 @@ function Compass:update(dt)
     end
 
     if Compass.initializeTimeout > 0 then
-        -- Give time for other mods to override Steerable's draw function.
+        -- Give time for other mods to override Drivable's draw function.
         Compass.initializeTimeout = Compass.initializeTimeout - 1
         if Compass.initializeTimeout <= 0 then
-            Compass:overrideSteerableDraw()
+            --Compass:overrideSteerableDraw()
+            Compass:overrideDrivableDraw()
             --
             Compass.loadCompassPresets()
             Compass.drawFuncIdx = math.min(math.max(Utils.getNoNil(Compass.drawFuncIdx, 1), 0), table.getn(Compass.drawFuncs))
@@ -409,8 +413,11 @@ end;
 function Compass:draw()
 end;
 
-function Compass:overrideSteerableDraw()
-    Steerable.draw = Utils.appendedFunction(Steerable.draw, Compass.DrawCompass);
+--function Compass:overrideSteerableDraw()
+--    Steerable.draw = Utils.appendedFunction(Steerable.draw, Compass.DrawCompass);
+--end
+function Compass:overrideDrivableDraw()
+    Drivable.draw = Utils.appendedFunction(Drivable.draw, Compass.DrawCompass);
 end
 
 function Compass.getDrawFuncName(idx)
@@ -425,9 +432,9 @@ end
 
 --
 Compass.DrawCompass = function(self)
-    if self.motor == nil then  -- Due to FS15 Steerable without Motorized.
-        return;
-    end
+    --if self.motor == nil then  -- Due to FS15 Steerable without Motorized.
+    --    return;
+    --end
 
     if g_currentMission.showHelpText then
         -- Only show in helpbox, if correct key-modifier is pressed (SHIFT/CTRL/ALT), or there is no key-modifier assigned to the InputBinding.COMPASS_TOGGLE
@@ -440,14 +447,7 @@ Compass.DrawCompass = function(self)
         local x,y,z = localDirectionToWorld(self.rootNode, 0, 0, 1);
         local length = Utils.vector2Length(x,z);
         if (length ~= 0.0) then -- Try to make sure we do not divide by zero.
-            local direction = math.deg(math.atan2(z/length,x/length)) + 90.0;   -- Rotate clockwise, so north=0, east=90, south=180, west=270.
-            while (direction > 359.999999) do
-                direction = direction - 360.0;
-            end;
-            while (direction < 0.0) do
-                direction = direction + 360.0;
-            end;
-
+            local direction = (math.deg(math.atan2(z/length,x/length)) + 90.0) % 360.0;   -- Rotate clockwise, so north=0, east=90, south=180, west=270.
             Compass.drawFuncs[Compass.drawFuncIdx](direction);
         end;
     end;
