@@ -234,6 +234,8 @@ function Compass.saveCompassPresets()
     local tag = "compassConfig"
     local xmlFile = createXMLFile(tag, fileName, tag)
     
+    setXMLFloat(xmlFile, tag.."#aspectRatio", g_screenAspectRatio)
+    
     local i = 0
     for _,cp in pairs(Compass.compassPresets) do
       local tag = ("compassConfig.preset(%d)"):format(i)
@@ -283,66 +285,115 @@ function Compass.loadCompassPresets()
     Compass.compassPresets = {}
 
     local fileName = g_modsDirectory .. "/" .. "Compass_config.XML";
-    if not fileExists(fileName) then
-      -- Default presets
-      -- TODO: Fix for the different aspect-ratios.
-      addPreset("Default",      0.826,0.127, 0.060,0.020, 0.014, false, {1,1,1,1}, {0,0,0,0.5}, 0.005, 0.005, 0.004)
-      addPreset("BelowClock",   0.803,0.910, 0.060,0.020, 0.014, false, {1,1,1,1}, {0,0,0,0.5}, 0.005, 0.005, 0.004)
-      addPreset("AboveClock",   0.803,0.980, 0.060,0.020, 0.014, false, {1,1,1,1}, {0,0,0,0.5}, 0.005, 0.005, 0.004)
-      addPreset("TopCenter",    0.470,0.980, 0.060,0.020, 0.014, false, {1,1,1,1}, {0,0,0,0.5}, 0.005, 0.005, 0.004)
-    --addPreset("BelowMapLeft", 0.016,0.000, 0.060,0.021, 0.014, false, {1,1,1,1}, {0,0,0,0.5}, 0.005, 0.005, 0.004)
-      addPreset("BelowMapRight",0.112,0.000, 0.060,0.021, 0.014, false, {1,1,1,1}, {0,0,0,0.5}, 0.005, 0.005, 0.004)
-      addPreset("BottomCenter", 0.470,0.000, 0.060,0.020, 0.014, false, {1,1,1,1}, {0,0,0,0.5}, 0.005, 0.005, 0.004)
-      addPreset("BelowSchema",  0.826,0.000, 0.060,0.021, 0.014, false, {1,1,1,1}, {0,0,0,0.5}, 0.005, 0.005, 0.004)
-      addPreset("LeftOfSchema", 0.762,0.021, 0.064,0.028, 0.016, false, {1,1,1,1}, {0,0,0,0.5}, 0.005, 0.005, 0.008)
-      Compass.saveCompassPresets()
-      return
-    end
-
-    local tag = "compassConfig"
-    local xmlFile = loadXMLFile(tag, fileName, tag)
-    if xmlFile ~= nil then
-      local i = 0
-      while true do
-        tag = ("compassConfig.preset(%d)"):format(i)
-        i=i+1
-        if not hasXMLProperty(xmlFile, tag.."#name") then
-          break
-        end
-      
-        local selected      = getXMLBool(                               xmlFile, tag.."#selected")
-        local name          = getXMLString(                             xmlFile, tag.."#name")
-        local xy            = { Utils.getVectorFromString(getXMLString( xmlFile, tag.."#xyPos")) }
-        local wh            = { Utils.getVectorFromString(getXMLString( xmlFile, tag.."#boxWH")) }
-        local fontSize      = getXMLFloat(                              xmlFile, tag.."#fontSize")
-        local fontBold      = getXMLBool(                               xmlFile, tag.."#fontBold")
-        local fontColor     = { Utils.getVectorFromString(getXMLString( xmlFile, tag.."#fontColor")) }
-        local boxColor      = { Utils.getVectorFromString(getXMLString( xmlFile, tag.."#boxColor"))  }
-        local leftAlignOff  = getXMLFloat(                              xmlFile, tag.."#leftAlignOffset")
-        local rightAlignOff = getXMLFloat(                              xmlFile, tag.."#rightAlignOffset")
+    local wasLoaded = false;
+    
+    if fileExists(fileName) then
+      local tag = "compassConfig"
+      local xmlFile = loadXMLFile(tag, fileName, tag)
+      if xmlFile ~= nil then
+        local tag = "compassConfig"
+        local lastAspectRatio = getXMLFloat(xmlFile, tag.."#aspectRatio")
         
-        if  table.getn(xy) == 2
-        and table.getn(wh) == 2
-        and table.getn(fontColor) == 4
-        and table.getn(boxColor) == 4
-        then
-          local x,y     = Utils.getNoNil(xy[1],0.826),Utils.getNoNil(xy[2],0.127)
-          local w,h     = Utils.getNoNil(wh[1],0.060),Utils.getNoNil(wh[2],0.020)
-          fontSize      = math.max(0.001, Utils.getNoNil(fontSize, 0.014))
-          fontBold      = fontBold==true
-          leftAlignOff  = math.max(0.001, Utils.getNoNil(leftAlignOff, 0.005))
-          rightAlignOff = math.max(0.001, Utils.getNoNil(rightAlignOff, 0.005))
-          --
-          local yTxtOff = (h/2 - fontSize/2) + (fontSize * 0.1)
-          --
-          addPreset(name, x,y, w,h, fontSize, fontBold, fontColor, boxColor, leftAlignOff, rightAlignOff, yTxtOff)
-          --
-          if selected then
-            Compass.drawFuncIdx = table.getn(Compass.compassPresets);
+        if lastAspectRatio == g_screenAspectRatio then
+          local i = 0
+          while true do
+            tag = ("compassConfig.preset(%d)"):format(i)
+            i=i+1
+            if not hasXMLProperty(xmlFile, tag.."#name") then
+              break
+            end
+          
+            local selected      = getXMLBool(                               xmlFile, tag.."#selected")
+            local name          = getXMLString(                             xmlFile, tag.."#name")
+            local xy            = { Utils.getVectorFromString(getXMLString( xmlFile, tag.."#xyPos")) }
+            local wh            = { Utils.getVectorFromString(getXMLString( xmlFile, tag.."#boxWH")) }
+            local fontSize      = getXMLFloat(                              xmlFile, tag.."#fontSize")
+            local fontBold      = getXMLBool(                               xmlFile, tag.."#fontBold")
+            local fontColor     = { Utils.getVectorFromString(getXMLString( xmlFile, tag.."#fontColor")) }
+            local boxColor      = { Utils.getVectorFromString(getXMLString( xmlFile, tag.."#boxColor"))  }
+            local leftAlignOff  = getXMLFloat(                              xmlFile, tag.."#leftAlignOffset")
+            local rightAlignOff = getXMLFloat(                              xmlFile, tag.."#rightAlignOffset")
+            
+            if  table.getn(xy) == 2
+            and table.getn(wh) == 2
+            and table.getn(fontColor) == 4
+            and table.getn(boxColor) == 4
+            then
+              local x,y     = Utils.getNoNil(xy[1],0.826),Utils.getNoNil(xy[2],0.127)
+              local w,h     = Utils.getNoNil(wh[1],0.060),Utils.getNoNil(wh[2],0.020)
+              fontSize      = math.max(0.001, Utils.getNoNil(fontSize, 0.014))
+              fontBold      = fontBold==true
+              leftAlignOff  = math.max(0.001, Utils.getNoNil(leftAlignOff, 0.005))
+              rightAlignOff = math.max(0.001, Utils.getNoNil(rightAlignOff, 0.005))
+              --
+              local yTxtOff = (h/2 - fontSize/2) + (fontSize * 0.1)
+              --
+              addPreset(name, x,y, w,h, fontSize, fontBold, fontColor, boxColor, leftAlignOff, rightAlignOff, yTxtOff)
+              --
+              if selected then
+                Compass.drawFuncIdx = table.getn(Compass.compassPresets);
+              end
+              --
+              wasLoaded = true
+            end
           end
         end
+        
+        delete(xmlFile)
       end
-      delete(xmlFile)
+    end
+    
+    if not wasLoaded then
+      -- Default presets
+      addPreset("Default",
+        g_currentMission.hudBackgroundOverlay.x,
+        g_currentMission.hudBackgroundOverlay.y + g_currentMission.hudBackgroundOverlay.height,
+        0.060,0.020, 0.014, false, {1,1,1,1}, {0,0,0,0.5}, 0.005, 0.005, 0.004
+      )
+
+      addPreset("BelowClock",   
+        g_currentMission.weatherTimeBackgroundOverlay.x,
+        g_currentMission.weatherTimeBackgroundOverlay.y - 0.020,
+        0.060,0.020, 0.014, false, {1,1,1,1}, {0,0,0,0.5}, 0.005, 0.005, 0.004
+      )
+
+      addPreset("AboveClock",   
+        g_currentMission.weatherTimeBackgroundOverlay.x,
+        g_currentMission.weatherTimeBackgroundOverlay.y + g_currentMission.weatherTimeBackgroundOverlay.height,
+        0.060,1.0 - (g_currentMission.weatherTimeBackgroundOverlay.y + g_currentMission.weatherTimeBackgroundOverlay.height), 0.014, false, {1,1,1,1}, {0,0,0,0.5}, 0.005, 0.005, 0.004
+      )
+
+      addPreset("TopCenter",    
+        0.5 - (0.060 / 2),
+        1.0 - (0.020), 
+        0.060,0.020, 0.014, false, {1,1,1,1}, {0,0,0,0.5}, 0.005, 0.005, 0.004
+      )
+
+      addPreset("BelowMapRight",
+        g_currentMission.ingameMap.mapPosX,
+        0.0, 
+        0.060,g_currentMission.ingameMap.mapPosY, 0.014, false, {1,1,1,1}, {0,0,0,0.5}, 0.005, 0.005, 0.004
+      )
+
+      addPreset("BottomCenter", 
+        0.5 - (0.060 / 2),
+        0.000, 
+        0.060,0.020, 0.014, false, {1,1,1,1}, {0,0,0,0.5}, 0.005, 0.005, 0.004
+      )
+      
+      addPreset("BelowSchema",  
+        g_currentMission.hudBackgroundOverlay.x,
+        0.0,
+        0.060,g_currentMission.hudBackgroundOverlay.y - 0, 0.014, false, {1,1,1,1}, {0,0,0,0.5}, 0.005, 0.005, 0.004
+      )
+
+      addPreset("LeftOfSchema", 
+        g_currentMission.hudBackgroundOverlay.x - 0.064,
+        g_currentMission.hudBackgroundOverlay.y + g_currentMission.hudBackgroundOverlay.height - 0.028, 
+        0.064,0.028, 0.016, false, {1,1,1,1}, {0,0,0,0.5}, 0.005, 0.005, 0.008
+      )
+      
+      Compass.saveCompassPresets()
     end
 end
 
