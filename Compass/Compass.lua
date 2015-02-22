@@ -370,8 +370,8 @@ function Compass.loadCompassPresets()
       )
 
       addPreset("BelowMapRight",
-        g_currentMission.ingameMap.mapPosX,
-        0.0, 
+        g_currentMission.ingameMap.mapPosX + g_currentMission.ingameMap.mapWidth - 0.060,
+        0.0,
         0.060,g_currentMission.ingameMap.mapPosY, 0.014, false, {1,1,1,1}, {0,0,0,0.5}, 0.005, 0.005, 0.004
       )
 
@@ -382,15 +382,15 @@ function Compass.loadCompassPresets()
       )
       
       addPreset("BelowSchema",  
-        g_currentMission.hudBackgroundOverlay.x,
+        g_currentMission.hudSelectionBackgroundOverlay.x,
         0.0,
-        0.060,g_currentMission.hudBackgroundOverlay.y - 0, 0.014, false, {1,1,1,1}, {0,0,0,0.5}, 0.005, 0.005, 0.004
+        0.060,g_currentMission.hudSelectionBackgroundOverlay.y - 0, 0.014, false, {1,1,1,1}, {0,0,0,0.5}, 0.005, 0.005, 0.004
       )
 
       addPreset("LeftOfSchema", 
-        g_currentMission.hudBackgroundOverlay.x - 0.064,
-        g_currentMission.hudBackgroundOverlay.y + g_currentMission.hudBackgroundOverlay.height - 0.028, 
-        0.064,0.028, 0.016, false, {1,1,1,1}, {0,0,0,0.5}, 0.005, 0.005, 0.008
+        g_currentMission.hudSelectionBackgroundOverlay.x - 0.064,
+        g_currentMission.hudSelectionBackgroundOverlay.y,
+        0.064,g_currentMission.hudSelectionBackgroundOverlay.height, 0.016, false, {1,1,1,1}, {0,0,0,0.5}, 0.005, 0.005, 0.008
       )
       
       Compass.saveCompassPresets()
