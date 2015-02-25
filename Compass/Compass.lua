@@ -234,7 +234,7 @@ function Compass.saveCompassPresets()
     local tag = "compassConfig"
     local xmlFile = createXMLFile(tag, fileName, tag)
     
-    setXMLFloat(xmlFile, tag.."#aspectRatio", g_screenAspectRatio)
+    setXMLString(xmlFile, tag.."#screenWidthHeight", ""..g_screenWidth.." "..g_screenHeight)
     
     local i = 0
     for _,cp in pairs(Compass.compassPresets) do
@@ -292,9 +292,11 @@ function Compass.loadCompassPresets()
       local xmlFile = loadXMLFile(tag, fileName, tag)
       if xmlFile ~= nil then
         local tag = "compassConfig"
-        local lastAspectRatio = getXMLFloat(xmlFile, tag.."#aspectRatio")
-        
-        if lastAspectRatio == g_screenAspectRatio then
+        local lastScreenWH = { Utils.getVectorFromString(getXMLString(xmlFile, tag.."#screenWidthHeight")) }
+
+        if  lastScreenWH[1] == g_screenWidth 
+        and lastScreenWH[2] == g_screenHeight 
+        then
           local i = 0
           while true do
             tag = ("compassConfig.preset(%d)"):format(i)
@@ -448,7 +450,6 @@ function Compass:update(dt)
         -- Give time for other mods to override Drivable's draw function.
         Compass.initializeTimeout = Compass.initializeTimeout - 1
         if Compass.initializeTimeout <= 0 then
-            --Compass:overrideSteerableDraw()
             Compass:overrideDrivableDraw()
             --
             Compass.loadCompassPresets()
@@ -464,9 +465,6 @@ end;
 function Compass:draw()
 end;
 
---function Compass:overrideSteerableDraw()
---    Steerable.draw = Utils.appendedFunction(Steerable.draw, Compass.DrawCompass);
---end
 function Compass:overrideDrivableDraw()
     Drivable.draw = Utils.appendedFunction(Drivable.draw, Compass.DrawCompass);
 end
@@ -483,10 +481,6 @@ end
 
 --
 Compass.DrawCompass = function(self)
-    --if self.motor == nil then  -- Due to FS15 Steerable without Motorized.
-    --    return;
-    --end
-
     if g_currentMission.showHelpText then
         -- Only show in helpbox, if correct key-modifier is pressed (SHIFT/CTRL/ALT), or there is no key-modifier assigned to the InputBinding.COMPASS_TOGGLE
         if (Compass.keyModifier_COMPASS_TOGGLE == nil) or (Input.isKeyPressed(Compass.keyModifier_COMPASS_TOGGLE)) then
