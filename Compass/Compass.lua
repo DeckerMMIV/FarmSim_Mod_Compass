@@ -224,8 +224,15 @@ local function vectorToString(v, formatFunc)
 end
 
 function Compass.saveCompassPresets()
-    if not g_currentMission:getIsClient() then
-        -- Only clients supported
+    -- Inspired by ZZZ_GPS
+    local function checkIsDedi()
+        local pixelX, pixelY = getScreenModeInfo(getScreenMode());
+        return pixelX*pixelY < 1;
+    end;
+    local isDediServer = checkIsDedi();
+    --
+    if g_dedicatedServerInfo ~= nil or isDediServer then
+        print("** Compass seems to be running on a dedicated-server. So will not create 'Compass_config.xml' file.");
         return;
     end
 
