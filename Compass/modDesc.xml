@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
-<modDesc descVersion="22">
-    <author>Freelance Modding Crew</author>
-    <version>2.0.7</version> <!-- http://semver.org/ -->
+<modDesc descVersion="25">
+    <author>Decker_MMIV</author>
+    
     <contributors>Gonimy_Vetrom, Ziuta, JakobT</contributors>
+
+    <version>2.0.8</version>
     
     <title>
         <en>Compass </en>
@@ -17,36 +19,31 @@
 <![CDATA[Displays a compass on the screen.
 Different position presets will be stored in Compass_Config.XML file.
 
-
-Decker_MMIV - fs-uk.com, forum.farming-simulator.com, modhoster.com]]>
+Decker_MMIV - fs-uk.com, modcentral.co.uk, forum.farming-simulator.com, modhoster.com]]>
         </en>
         <de>
 <![CDATA[Zeigt ein Kompass auf dem Bildschirm.
 
 
-
-Decker_MMIV - fs-uk.com, forum.farming-simulator.com, modhoster.com]]>
+Decker_MMIV - fs-uk.com, modcentral.co.uk, forum.farming-simulator.com, modhoster.com]]>
         </de>
         <fr>
 <![CDATA[Affiche une boussole à l'écran.
 
 
-
-Decker_MMIV - fs-uk.com, forum.farming-simulator.com, modhoster.com]]>
+Decker_MMIV - fs-uk.com, modcentral.co.uk, forum.farming-simulator.com, modhoster.com]]>
         </fr>
         <pl>
 <![CDATA[Wyświetla kompas na ekranie.
 
 
-
-Decker_MMIV - fs-uk.com, forum.farming-simulator.com, modhoster.com]]>
+Decker_MMIV - fs-uk.com, modcentral.co.uk, forum.farming-simulator.com, modhoster.com]]>
         </pl>
         <ru>
 <![CDATA[Мод выводит на экран компас.
 Все заданные настройки положения будут храниться в файле Compass_Config.XML.
 
-
-Decker_MMIV - fs-uk.com, forum.farming-simulator.com, modhoster.com]]>
+Decker_MMIV - fs-uk.com, modcentral.co.uk, forum.farming-simulator.com, modhoster.com]]>
         </ru>
     </description>
 
