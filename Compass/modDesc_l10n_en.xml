@@ -13,7 +13,6 @@
     <!-- Note that 'description' is only here for easier translations. I will manually copy it to ModDesc.XML later. -->
     <description>
 Displays a compass on the screen.
-Different position presets will be stored in Compass_Config.XML file.
     </description>
 
     <texts>

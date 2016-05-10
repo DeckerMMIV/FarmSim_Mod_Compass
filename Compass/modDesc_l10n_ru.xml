@@ -13,7 +13,6 @@
     <!-- Note that 'description' is only here for easier translations. I will manually copy it to ModDesc.XML later. -->
     <description>
 Мод выводит на экран компас.
-Все заданные настройки положения будут храниться в файле Compass_Config.XML.
     </description>
 
     <texts>

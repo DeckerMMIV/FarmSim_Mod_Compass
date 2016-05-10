@@ -4,7 +4,7 @@
     
     <contributors>Gonimy_Vetrom, Ziuta, JakobT</contributors>
 
-    <version>2.0.8</version>
+    <version>2.1.0</version>
     
     <title>
         <en>Compass </en>
@@ -17,7 +17,7 @@
     <description>
         <en>
 <![CDATA[Displays a compass on the screen.
-Different position presets will be stored in Compass_Config.XML file.
+
 
 Decker_MMIV - fs-uk.com, modcentral.co.uk, forum.farming-simulator.com, modhoster.com]]>
         </en>
@@ -41,7 +41,7 @@ Decker_MMIV - fs-uk.com, modcentral.co.uk, forum.farming-simulator.com, modhoste
         </pl>
         <ru>
 <![CDATA[Мод выводит на экран компас.
-Все заданные настройки положения будут храниться в файле Compass_Config.XML.
+
 
 Decker_MMIV - fs-uk.com, modcentral.co.uk, forum.farming-simulator.com, modhoster.com]]>
         </ru>
