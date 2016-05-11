@@ -1,7 +1,9 @@
-[b]Compass (v2.1.0)[/b]
+[b]Compass (v2.1.1)[/b]
 
 
 [b][u]Changelog[/u][/b]
+2.1.1
+- Bug-fix.
 2.1.0
 - Now using 'ModsSettings'-mod for storing presets and last selected preset.
 - Discarded usage of Compass_Config.XML.
@@ -19,9 +21,11 @@ Note! It will [i]NOT drive[/i] the vehicle for you! - It only displays a compass
 
 There are eight default preset positions, which can be cycled through using the action 'Compass position' (default keys: LEFT-ALT C).
 
+These presets can be customized if using the 'ModsSettings' mod.
+
 [u]Default action/key assignments[/u]:
 
-- [b]LEFT-ALT C[/b] : Next compass preset/position
+[b]LEFT-ALT C[/b] - Next compass preset/position
 
 
 [b][u]Restrictions[/u][/b]

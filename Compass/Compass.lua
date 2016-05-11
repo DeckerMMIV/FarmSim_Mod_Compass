@@ -211,7 +211,10 @@ end
 
 function Compass.saveCompassPresets()
     -- Make use of the 'ModsSettings'-mod for storing/retrieving the compass presets.
-    if ModsSettings ~= nil and ModsSettings.isVersion("0.2.0", "Compass") then
+    if  ModsSettings ~= nil 
+    and ModsSettings.isVersion ~= nil 
+    and ModsSettings.isVersion("0.2.0", "Compass") 
+    then
         local modName = "Compass"
         local keyName
 
@@ -241,49 +244,6 @@ function Compass.saveCompassPresets()
         ModsSettings.setStringLocal(modName, keyName, "lastScreenWH", ("%d %d"):format(g_screenWidth, g_screenHeight))
         ModsSettings.setStringLocal(modName, keyName, "selectedPreset", selectedPreset)
     end
-    
---[[
-    -- Inspired by ZZZ_GPS
-    local function checkIsDedi()
-        local pixelX, pixelY = getScreenModeInfo(getScreenMode());
-        return pixelX*pixelY < 1;
-    end;
-    local isDediServer = checkIsDedi();
-    --
-    if g_dedicatedServerInfo ~= nil or isDediServer then
-        print("** Compass seems to be running on a dedicated-server. So will not create 'Compass_config.xml' file.");
-        return;
-    end
-
-    local fileName = g_modsDirectory .. "/" .. "Compass_config.XML";
-
-    local tag = "compassConfig"
-    local xmlFile = createXMLFile(tag, fileName, tag)
-    
-    setXMLString(xmlFile, tag.."#screenWidthHeight", ""..g_screenWidth.." "..g_screenHeight)
-    
-    local i = 0
-    for _,cp in pairs(Compass.compassPresets) do
-      local tag = ("compassConfig.preset(%d)"):format(i)
-      i=i+1
-
-      setXMLString( xmlFile, tag.."#name"             , cp.name)
-      if Compass.drawFuncIdx == i then
-        setXMLBool( xmlFile, tag.."#selected"         , true)
-      end
-      setXMLString( xmlFile, tag.."#xyPos"            , vectorToString( { cp.x, cp.y } , toFloat3Decimals ))
-      setXMLString( xmlFile, tag.."#boxWH"            , vectorToString( { cp.w, cp.h } , toFloat3Decimals ))
-      setXMLString( xmlFile, tag.."#fontSize"         , toFloat3Decimals(cp.fontSize))
-      setXMLBool(   xmlFile, tag.."#fontBold"         , cp.fontBold)
-      setXMLString( xmlFile, tag.."#fontColor"        , vectorToString( cp.fontColor , toFloat3Decimals ) )
-      setXMLString( xmlFile, tag.."#boxColor"         , vectorToString( cp.boxColor  , toFloat3Decimals ) )
-      setXMLString( xmlFile, tag.."#leftAlignOffset"  , toFloat3Decimals(cp.xTxtL))
-      setXMLString( xmlFile, tag.."#rightAlignOffset" , toFloat3Decimals(cp.xTxtR))
-    end
-    
-    saveXMLFile(xmlFile);
-    delete(xmlFile);
---]]    
 end    
 
 local function addPreset(name, x,y, w,h, fontSize, fontBold, fontColor, boxColor, leftAlignOff, rightAlignOff, yTxtOff)
@@ -314,7 +274,10 @@ function Compass.loadCompassPresets()
     local wasLoaded = false;
 
     -- Make use of the 'ModsSettings'-mod for storing/retrieving the compass presets.
-    if ModsSettings ~= nil and ModsSettings.isVersion("0.2.0", "Compass") then
+    if  ModsSettings ~= nil 
+    and ModsSettings.isVersion ~= nil 
+    and ModsSettings.isVersion("0.2.0", "Compass")
+    then
         local modName = "Compass"
         local keyName = "config"
     
@@ -374,66 +337,6 @@ function Compass.loadCompassPresets()
             end
         end
     end
---[[
-    local fileName = g_modsDirectory .. "/" .. "Compass_config.XML";
-    if fileExists(fileName) then
-      local tag = "compassConfig"
-      local xmlFile = loadXMLFile(tag, fileName, tag)
-      if xmlFile ~= nil then
-        local tag = "compassConfig"
-        local lastScreenWH = { Utils.getVectorFromString(getXMLString(xmlFile, tag.."#screenWidthHeight")) }
-
-        if  lastScreenWH[1] == g_screenWidth 
-        and lastScreenWH[2] == g_screenHeight 
-        then
-          local i = 0
-          while true do
-            tag = ("compassConfig.preset(%d)"):format(i)
-            i=i+1
-            if not hasXMLProperty(xmlFile, tag.."#name") then
-              break
-            end
-          
-            local selected      = getXMLBool(                               xmlFile, tag.."#selected")
-            local name          = getXMLString(                             xmlFile, tag.."#name")
-            local xy            = { Utils.getVectorFromString(getXMLString( xmlFile, tag.."#xyPos")) }
-            local wh            = { Utils.getVectorFromString(getXMLString( xmlFile, tag.."#boxWH")) }
-            local fontSize      = getXMLFloat(                              xmlFile, tag.."#fontSize")
-            local fontBold      = getXMLBool(                               xmlFile, tag.."#fontBold")
-            local fontColor     = { Utils.getVectorFromString(getXMLString( xmlFile, tag.."#fontColor")) }
-            local boxColor      = { Utils.getVectorFromString(getXMLString( xmlFile, tag.."#boxColor"))  }
-            local leftAlignOff  = getXMLFloat(                              xmlFile, tag.."#leftAlignOffset")
-            local rightAlignOff = getXMLFloat(                              xmlFile, tag.."#rightAlignOffset")
-            
-            if  table.getn(xy) == 2
-            and table.getn(wh) == 2
-            and table.getn(fontColor) == 4
-            and table.getn(boxColor) == 4
-            then
-              local x,y     = Utils.getNoNil(xy[1],0.826),Utils.getNoNil(xy[2],0.127)
-              local w,h     = Utils.getNoNil(wh[1],0.060),Utils.getNoNil(wh[2],0.020)
-              fontSize      = math.max(0.001, Utils.getNoNil(fontSize, 0.014))
-              fontBold      = fontBold==true
-              leftAlignOff  = math.max(0.001, Utils.getNoNil(leftAlignOff, 0.005))
-              rightAlignOff = math.max(0.001, Utils.getNoNil(rightAlignOff, 0.005))
-              --
-              local yTxtOff = (h/2 - fontSize/2) + (fontSize * 0.1)
-              --
-              addPreset(name, x,y, w,h, fontSize, fontBold, fontColor, boxColor, leftAlignOff, rightAlignOff, yTxtOff)
-              --
-              if selected then
-                Compass.drawFuncIdx = table.getn(Compass.compassPresets);
-              end
-              --
-              wasLoaded = true
-            end
-          end
-        end
-        
-        delete(xmlFile)
-      end
-    end
---]]
     
     if not wasLoaded then
       -- Default presets

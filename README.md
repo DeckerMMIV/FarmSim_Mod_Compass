@@ -6,6 +6,9 @@ To read more about this mod, find it on;
 
 ## Change-log
 
+2.1.1
+- Bug fix.
+
 2.1.0
 - Now using 'ModsSettings'-mod for storing presets and last selected preset.
 - Discarded usage of Compass_Config.XML.
