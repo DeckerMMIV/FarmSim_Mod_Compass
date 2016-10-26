@@ -272,9 +272,9 @@ end
 
 function Compass.loadCompassPresets()
     Compass.compassPresets = {}
---[[
-    local wasLoaded = false;
 
+    local wasLoaded = false;
+--[[
     -- Make use of the 'ModsSettings'-mod for storing/retrieving the compass presets.
     if  ModsSettings ~= nil 
     and ModsSettings.isVersion ~= nil 
