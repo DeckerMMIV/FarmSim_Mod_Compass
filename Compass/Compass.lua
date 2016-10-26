@@ -1,8 +1,8 @@
 --
 -- Compass
 --
--- @author  Decker_MMIV - fs-uk.com, forum.farming-simulator.com, modhoster.com
--- @date    2015-05-xx
+-- @author  Decker_MMIV - fs-uk.com, modcentral.co.uk, forum.farming-simulator.com, modhoster.com
+-- @date    2016-10-xx
 --
 
 Compass = {};
@@ -210,6 +210,7 @@ local function vectorToString(v, formatFunc)
 end
 
 function Compass.saveCompassPresets()
+--[[
     -- Make use of the 'ModsSettings'-mod for storing/retrieving the compass presets.
     if  ModsSettings ~= nil 
     and ModsSettings.isVersion ~= nil 
@@ -244,6 +245,7 @@ function Compass.saveCompassPresets()
         ModsSettings.setStringLocal(modName, keyName, "lastScreenWH", ("%d %d"):format(g_screenWidth, g_screenHeight))
         ModsSettings.setStringLocal(modName, keyName, "selectedPreset", selectedPreset)
     end
+--]]    
 end    
 
 local function addPreset(name, x,y, w,h, fontSize, fontBold, fontColor, boxColor, leftAlignOff, rightAlignOff, yTxtOff)
@@ -270,7 +272,7 @@ end
 
 function Compass.loadCompassPresets()
     Compass.compassPresets = {}
-
+--[[
     local wasLoaded = false;
 
     -- Make use of the 'ModsSettings'-mod for storing/retrieving the compass presets.
@@ -337,9 +339,10 @@ function Compass.loadCompassPresets()
             end
         end
     end
-    
+--]]    
     if not wasLoaded then
       -- Default presets
+--[[      
       addPreset("Default",
         g_currentMission.hudBackgroundOverlay.x,
         g_currentMission.hudBackgroundOverlay.y + g_currentMission.hudBackgroundOverlay.height,
@@ -357,25 +360,25 @@ function Compass.loadCompassPresets()
         g_currentMission.weatherTimeBackgroundOverlay.y + g_currentMission.weatherTimeBackgroundOverlay.height,
         0.060,1.0 - (g_currentMission.weatherTimeBackgroundOverlay.y + g_currentMission.weatherTimeBackgroundOverlay.height), 0.014, false, {1,1,1,1}, {0,0,0,0.5}, 0.005, 0.005, 0.004
       )
-
+--]]
       addPreset("TopCenter",    
         0.5 - (0.060 / 2),
         1.0 - (0.020), 
         0.060,0.020, 0.014, false, {1,1,1,1}, {0,0,0,0.5}, 0.005, 0.005, 0.004
       )
-
+--[[
       addPreset("BelowMapRight",
         g_currentMission.ingameMap.mapPosX + g_currentMission.ingameMap.mapWidth - 0.060,
         0.0,
         0.060,g_currentMission.ingameMap.mapPosY, 0.014, false, {1,1,1,1}, {0,0,0,0.5}, 0.005, 0.005, 0.004
       )
-
+--]]
       addPreset("BottomCenter", 
         0.5 - (0.060 / 2),
         0.000, 
         0.060,0.020, 0.014, false, {1,1,1,1}, {0,0,0,0.5}, 0.005, 0.005, 0.004
       )
-      
+      --[[
       addPreset("BelowSchema",  
         g_currentMission.hudSelectionBackgroundOverlay.x,
         0.0,
@@ -387,7 +390,7 @@ function Compass.loadCompassPresets()
         g_currentMission.hudSelectionBackgroundOverlay.y,
         0.064,g_currentMission.hudSelectionBackgroundOverlay.height, 0.016, false, {1,1,1,1}, {0,0,0,0.5}, 0.005, 0.005, 0.008
       )
-      
+--]]      
       Compass.saveCompassPresets()
     end
 end
@@ -476,7 +479,7 @@ end
 Compass.DrawCompass = function(self)
     if g_currentMission.showHelpText then
         -- Only show in helpbox, if correct key-modifier is pressed (SHIFT/CTRL/ALT), or there is no key-modifier assigned to the InputBinding.COMPASS_TOGGLE
-        if (Compass.keyModifier_COMPASS_TOGGLE == nil) or (Input.isKeyPressed(Compass.keyModifier_COMPASS_TOGGLE)) then
+        if (Compass.keyModifier_COMPASS_TOGGLE == nil) or (Input.isPressed(Compass.keyModifier_COMPASS_TOGGLE)) then
             g_currentMission:addHelpButtonText(g_i18n:getText("COMPASS_TOGGLE") .. Compass.getDrawFuncName(Compass.drawFuncIdx), InputBinding.COMPASS_TOGGLE);
         end;
     end;

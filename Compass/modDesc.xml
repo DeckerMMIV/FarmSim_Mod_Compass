@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
-<modDesc descVersion="25">
+<modDesc descVersion="32">
     <author>Decker_MMIV</author>
     
     <contributors>Gonimy_Vetrom, Ziuta, JakobT</contributors>
 
-    <version>2.2.0</version>
+    <version>3.0.0</version>
     
     <title>
-        <en>Compass </en>
-        <de>Kompass </de>
-        <fr>Boussole</fr>
-        <pl>Kompas  </pl>
-        <ru>Компас  </ru>
+        <en>Compass  (FS17)</en>
+        <de>Kompass  (LS17)</de>
+        <fr>Boussole (FS17)</fr>
+        <pl>Kompas   (FS17)</pl>
+        <ru>Компас   (FS17)</ru>
     </title>
     
     <description>
@@ -57,6 +57,6 @@ Decker_MMIV - fs-uk.com, modcentral.co.uk, forum.farming-simulator.com, modhoste
     <l10n filenamePrefix="modDesc_l10n" /> <!-- Load the corresponding modDesc_l10n_<language>.XML file, or revert to 'en'/'de'. -->
 
     <inputBindings>    
-        <input name="COMPASS_TOGGLE" category="VEHICLE" key1="KEY_lalt KEY_c" key2="" button="" device="0" mouse="" />
+        <input visible="true" name="COMPASS_TOGGLE" category="VEHICLE" key1="KEY_lalt KEY_m" key2="" device="0" button="" mouse="" />
     </inputBindings>
 </modDesc>

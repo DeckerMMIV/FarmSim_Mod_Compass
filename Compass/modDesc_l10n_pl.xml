@@ -16,7 +16,7 @@ Wyświetla kompas na ekranie.
     </description>
 
     <texts>
-        <text name="COMPASS_TOGGLE"     text="Pozycja kompasu" />
+        <text name="input_COMPASS_TOGGLE"     text="Pozycja kompasu" />
         
         <text name="north"              text="N" />
         <text name="northeast"          text="NE" />

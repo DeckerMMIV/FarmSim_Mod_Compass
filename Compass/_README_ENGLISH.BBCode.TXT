@@ -1,14 +1,9 @@
-[b]Compass (v2.2.x)[/b]
+[b]Compass (v3.0.x)[/b]
 
 
 [b][u]Changelog[/u][/b]
-2.2.0
-- Now using 'ModsSettings'-mod for storing presets and last selected preset.
-- Discarded usage of Compass_Config.XML.
-
-
-[u]Recommended additional mods[/u]
-- 'ModsSettings' mod, for storage/retrieval of presets and last selected preset.
+3.0.0
+- Upgraded to FS17
 
 
 [b][u]Mod description[/u][/b]
@@ -17,13 +12,11 @@ Displays a compass on the screen while in a motorized vehicle.
 
 Note! It will [i]NOT drive[/i] the vehicle for you! - It only displays a compass, and thats it!
 
-There are eight default preset positions, which can be cycled through using the action 'Compass position' (default keys: LEFT-ALT C).
-
-These presets can be customized if using the 'ModsSettings' mod.
+There are two default preset positions and hidden, which can be cycled through using the action 'Compass position' (default keys: LEFT-ALT M).
 
 [u]Default action/key assignments[/u]:
 
-[b]LEFT-ALT C[/b] - Next compass preset/position
+[b]LEFT-ALT M[/b] - Next compass preset/position
 
 
 [b][u]Restrictions[/u][/b]
@@ -43,5 +36,5 @@ If you encounter problems or bugs using this mod, please use its support-thread.
 
 Credits:
 Script: Decker_MMIV
-Polish translation updates: Ziuta
-Russian translation updates: Gonimy_Vetrom
+Contributors:
+Translation; Ziuta, Gonimy_Vetrom, JakobT

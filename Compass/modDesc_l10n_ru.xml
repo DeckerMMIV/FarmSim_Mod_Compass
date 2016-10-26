@@ -16,7 +16,7 @@
     </description>
 
     <texts>
-        <text name="COMPASS_TOGGLE"     text="Положение компаса" />
+        <text name="input_COMPASS_TOGGLE"     text="Положение компаса" />
         
         <text name="north"              text="С" />
         <text name="northeast"          text="СВ"  />
