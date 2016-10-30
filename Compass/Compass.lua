@@ -19,6 +19,8 @@ function Compass.addDrawFunc(func)
     table.insert(Compass.drawFuncs, func)
 end
 
+--[[
+
 --
 local function drawCompass(compassAngle, props)
     local worldCornerNum = 1 + (math.floor((compassAngle + 22.5) / 45) % 8);
@@ -150,6 +152,7 @@ end
 --
 --
 
+--]]
 
 local function drawCompass3(compassAngle, props)
     local worldCornerNum = 1 + (math.floor((compassAngle + 22.5) / 45) % 8);
@@ -378,7 +381,7 @@ function Compass.loadCompassPresets()
         0.000, 
         0.060,0.020, 0.014, false, {1,1,1,1}, {0,0,0,0.5}, 0.005, 0.005, 0.004
       )
-      --[[
+--[[
       addPreset("BelowSchema",  
         g_currentMission.hudSelectionBackgroundOverlay.x,
         0.0,
@@ -390,8 +393,9 @@ function Compass.loadCompassPresets()
         g_currentMission.hudSelectionBackgroundOverlay.y,
         0.064,g_currentMission.hudSelectionBackgroundOverlay.height, 0.016, false, {1,1,1,1}, {0,0,0,0.5}, 0.005, 0.005, 0.008
       )
---]]      
+
       Compass.saveCompassPresets()
+--]]      
     end
 end
 
@@ -423,11 +427,13 @@ function Compass:loadMap(name)
 end;
 
 function Compass:deleteMap()
+--[[
     if g_client == nil then
         return;
     end
 
-    --Compass.saveCompassPresets()
+    Compass.saveCompassPresets()
+--]]    
 end;
 
 function Compass:mouseEvent(posX, posY, isDown, isUp, button)
@@ -477,10 +483,10 @@ end
 
 --
 Compass.DrawCompass = function(self)
-    if g_currentMission.showHelpText then
-        -- Only show in helpbox, if correct key-modifier is pressed (SHIFT/CTRL/ALT), or there is no key-modifier assigned to the InputBinding.COMPASS_TOGGLE
-        if (Compass.keyModifier_COMPASS_TOGGLE == nil) or (Input.isPressed(Compass.keyModifier_COMPASS_TOGGLE)) then
-            g_currentMission:addHelpButtonText(g_i18n:getText("COMPASS_TOGGLE") .. Compass.getDrawFuncName(Compass.drawFuncIdx), InputBinding.COMPASS_TOGGLE);
+    if g_currentMission.missionInfo.showHelpMenu then
+        -- Only show in helpbox, if correct key-modifier is pressed (SHIFT/CTRL/ALT)
+        if Compass.keyModifier_COMPASS_TOGGLE ~= nil and Input.isKeyPressed(Compass.keyModifier_COMPASS_TOGGLE) then
+            g_currentMission:addHelpButtonText(g_i18n:getText("COMPASS_TOGGLE") .. Compass.getDrawFuncName(Compass.drawFuncIdx), InputBinding.COMPASS_TOGGLE, nil, GS_PRIO_HIGH);
         end;
     end;
 
