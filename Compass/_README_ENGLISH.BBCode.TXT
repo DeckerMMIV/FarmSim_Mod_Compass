@@ -1,22 +1,25 @@
-[b]Compass (v3.0.x)[/b]
+[b]Compass[/b]
 
 
 [b][u]Changelog[/u][/b]
-3.0.0
-- Upgraded to FS17
+1.0.0.17
+- Upgraded to FS17 and changed version-numbering-scheme due to ModHub
+- Fixes with regards to screen aspect ratio
+- Supports HUD-scale
+- Changed mod filename
 
 
 [b][u]Mod description[/u][/b]
 
-Displays a compass on the screen while in a motorized vehicle.
+Displays a compass on the screen while in a drivable vehicle.
 
 Note! It will [i]NOT drive[/i] the vehicle for you! - It only displays a compass, and thats it!
 
-There are two default preset positions and hidden, which can be cycled through using the action 'Compass position' (default keys: LEFT-ALT M).
+There are two default preset positions (top/bottom) and an off setting, which can be cycled through using the action 'Compass position' (default keys: LEFT-ALT C).
 
 [u]Default action/key assignments[/u]:
 
-[b]LEFT-ALT M[/b] - Next compass preset/position
+[b]LEFT-ALT C[/b] - Next compass preset/position
 
 
 [b][u]Restrictions[/u][/b]
@@ -35,6 +38,7 @@ If you encounter problems or bugs using this mod, please use its support-thread.
 
 
 Credits:
-Script: Decker_MMIV
-Contributors:
-Translation; Ziuta, Gonimy_Vetrom, JakobT
+Script:
+- Decker_MMIV
+Contributors/Translations for this or previous versions:
+- Ziuta, Gonimy_Vetrom, JakobT

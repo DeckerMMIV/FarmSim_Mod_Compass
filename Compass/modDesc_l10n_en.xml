@@ -19,6 +19,8 @@ Displays a compass on the screen.
         <text name="input_COMPASS_TOGGLE"     text="Compass position" />
         <text name="COMPASS_TOGGLE"           text="Compass position" />
         
+        <text name="Compass_Hidden"           text="Off" />
+        
         <text name="north"              text="N" />
         <text name="northeast"          text="NE" />
         <text name="east"               text="E" />
