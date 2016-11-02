@@ -18,6 +18,9 @@
     <description>
         <en>
 <![CDATA[Displays a compass on the screen.
+
+Default keys:
+  LEFT-ALT C = Toggles preset (top/bottom) or off
 ]]>
         </en>
         <de>
