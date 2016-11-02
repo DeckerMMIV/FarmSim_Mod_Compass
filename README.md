@@ -10,6 +10,7 @@ To read more about this mod, find it on;
 - Fixes with regards to screen aspect ratio
 - Supports HUD-scale
 
+
 ## FS15 - Change-log
 2.2.0
 - Version dump due to official updated release
