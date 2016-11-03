@@ -7,8 +7,8 @@ To read more about this mod, find it on;
 ## FS17 - Change-log
 1.0.0.18
 - Updated translations
--- Italian by Xno
--- Russian by Gonimy-Vetrom
+  - Italian by Xno
+  - Russian by Gonimy-Vetrom
 - Refactored width calculation
 
 1.0.0.17
