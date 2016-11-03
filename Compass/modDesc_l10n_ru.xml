@@ -19,7 +19,7 @@
         <text name="input_COMPASS_TOGGLE"     text="Положение компаса" />
         <text name="COMPASS_TOGGLE"           text="Положение компаса" />
 
-        <text name="Compass_Hidden"           text="долой" />
+        <text name="Compass_Hidden"           text="Скрыть" />
 
         <text name="north"              text="С" />
         <text name="northeast"          text="СВ"  />
