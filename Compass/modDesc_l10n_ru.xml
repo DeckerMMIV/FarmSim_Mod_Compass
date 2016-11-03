@@ -21,8 +21,8 @@
     
         <text name="Compass_Hidden"         text="Скрыть" />
             
-        <text name="Preset_TopCenter"       text="TopCenter"    />  <!-- needs translation -->
-        <text name="Preset_BottomCenter"    text="BottomCenter" />  <!-- needs translation -->
+        <text name="Preset_TopCenter"       text="Вверху"    />
+        <text name="Preset_BottomCenter"    text="Внизу" />
 
         <text name="north"                  text="С"    />
         <text name="northeast"              text="СВ"   />
