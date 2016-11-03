@@ -1,45 +1,50 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
-<modDesc descVersion="21">
-    <author>Freelance Modding Crew</author>
-    <version>2.0.1</version> <!-- http://semver.org/ -->
-    <contributors></contributors>
+<modDesc descVersion="25">
+    <author>Decker_MMIV</author>
+    
+    <contributors>Gonimy_Vetrom, Ziuta, JakobT</contributors>
+
+    <version>2.2.0</version>
     
     <title>
         <en>Compass </en>
-        <de>Kompass </de> <!-- http://translate.google.com, English to German -->
-        <fr>Boussole</fr> <!-- http://translate.google.com, English to French -->
-        <pl>Kompas  </pl> <!-- http://translate.google.com, English to Polish -->
+        <de>Kompass </de>
+        <fr>Boussole</fr>
+        <pl>Kompas  </pl>
+        <ru>Компас  </ru>
     </title>
     
     <description>
         <en>
 <![CDATA[Displays a compass on the screen.
-Different position presets will be stored in Compass_Config.XML file.
 
 
-Decker_MMIV - fs-uk.com, forum.farming-simulator.com, modhoster.com]]>
+Decker_MMIV - fs-uk.com, modcentral.co.uk, forum.farming-simulator.com, modhoster.com]]>
         </en>
-        <de> <!-- http://translate.google.com -->
+        <de>
 <![CDATA[Zeigt ein Kompass auf dem Bildschirm.
 
 
-
-Decker_MMIV - fs-uk.com, forum.farming-simulator.com, modhoster.com]]>
+Decker_MMIV - fs-uk.com, modcentral.co.uk, forum.farming-simulator.com, modhoster.com]]>
         </de>
-        <fr> <!-- http://translate.google.com -->
+        <fr>
 <![CDATA[Affiche une boussole à l'écran.
 
 
-
-Decker_MMIV - fs-uk.com, forum.farming-simulator.com, modhoster.com]]>
+Decker_MMIV - fs-uk.com, modcentral.co.uk, forum.farming-simulator.com, modhoster.com]]>
         </fr>
-        <pl> <!-- http://translate.google.com -->
+        <pl>
 <![CDATA[Wyświetla kompas na ekranie.
 
 
-
-Decker_MMIV - fs-uk.com, forum.farming-simulator.com, modhoster.com]]>
+Decker_MMIV - fs-uk.com, modcentral.co.uk, forum.farming-simulator.com, modhoster.com]]>
         </pl>
+        <ru>
+<![CDATA[Мод выводит на экран компас.
+
+
+Decker_MMIV - fs-uk.com, modcentral.co.uk, forum.farming-simulator.com, modhoster.com]]>
+        </ru>
     </description>
 
     <iconFilename>store_Compass.dds</iconFilename>

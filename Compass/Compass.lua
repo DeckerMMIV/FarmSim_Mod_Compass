@@ -2,18 +2,7 @@
 -- Compass
 --
 -- @author  Decker_MMIV - fs-uk.com, forum.farming-simulator.com, modhoster.com
--- @date    2011-12-18
---
--- @history
---  2014-November
---      v2.0.0    - Upgraded to FS15, and refactored to support multiple preset-positions.
---                - Delaying the override of Steerable.draw function, so other mods can get
---                   a chance of overriding it or Compass's own function.
---                - Made use of anonymous functions for how drawing of the compass is done.
---                   Now it is possible for other mods to "add" other draw-functions for where 
---                   the compass should appear on the screen.
---                - Save/load of compass position/size presets to ...\MODS\Compass_Config.XML file.
---      v2.0.1    - Only create Compass_config.XML when 'client'.
+-- @date    2015-05-xx
 --
 
 Compass = {};
@@ -221,37 +210,40 @@ local function vectorToString(v, formatFunc)
 end
 
 function Compass.saveCompassPresets()
-    if not g_currentMission:getIsClient() then
-        -- Only clients supported
-        return;
+    -- Make use of the 'ModsSettings'-mod for storing/retrieving the compass presets.
+    if  ModsSettings ~= nil 
+    and ModsSettings.isVersion ~= nil 
+    and ModsSettings.isVersion("0.2.0", "Compass") 
+    then
+        local modName = "Compass"
+        local keyName
+
+        local selectedPreset = nil
+        local i=-1
+        for _,cp in pairs(Compass.compassPresets) do
+            i=i+1
+            keyName = ("preset(%d)"):format(i)
+            
+            ModsSettings.getStringLocal(modName, keyName, "name", cp.name)
+            ModsSettings.getStringLocal(modName, keyName, "xyPos", vectorToString( { cp.x, cp.y } , toFloat3Decimals ))
+            ModsSettings.getStringLocal(modName, keyName, "boxWH", vectorToString( { cp.w, cp.h } , toFloat3Decimals ))
+            ModsSettings.getStringLocal(modName, keyName, "leftAlignOffset" , toFloat3Decimals(cp.xTxtL))
+            ModsSettings.getStringLocal(modName, keyName, "rightAlignOffset", toFloat3Decimals(cp.xTxtR))
+            ModsSettings.getStringLocal(modName, keyName, "fontSize" , toFloat3Decimals(cp.fontSize))
+            ModsSettings.getBoolLocal(  modName, keyName, "fontBold" , cp.fontBold)
+            ModsSettings.getStringLocal(modName, keyName, "fontColor" , vectorToString( cp.fontColor , toFloat3Decimals ))
+            ModsSettings.getStringLocal(modName, keyName, "boxColor"  , vectorToString( cp.boxColor  , toFloat3Decimals ))
+            
+            if i+1 == Compass.drawFuncIdx then
+                selectedPreset = cp.name
+            end
+        end
+        
+        keyName = "config"
+        
+        ModsSettings.setStringLocal(modName, keyName, "lastScreenWH", ("%d %d"):format(g_screenWidth, g_screenHeight))
+        ModsSettings.setStringLocal(modName, keyName, "selectedPreset", selectedPreset)
     end
-
-    local fileName = g_modsDirectory .. "/" .. "Compass_config.XML";
-
-    local tag = "compassConfig"
-    local xmlFile = createXMLFile(tag, fileName, tag)
-    
-    local i = 0
-    for _,cp in pairs(Compass.compassPresets) do
-      local tag = ("compassConfig.preset(%d)"):format(i)
-      i=i+1
-
-      setXMLString( xmlFile, tag.."#name"             , cp.name)
-      if Compass.drawFuncIdx == i then
-        setXMLBool( xmlFile, tag.."#selected"         , true)
-      end
-      setXMLString( xmlFile, tag.."#xyPos"            , vectorToString( { cp.x, cp.y } , toFloat3Decimals ))
-      setXMLString( xmlFile, tag.."#boxWH"            , vectorToString( { cp.w, cp.h } , toFloat3Decimals ))
-      setXMLString( xmlFile, tag.."#fontSize"         , toFloat3Decimals(cp.fontSize))
-      setXMLBool(   xmlFile, tag.."#fontBold"         , cp.fontBold)
-      setXMLString( xmlFile, tag.."#fontColor"        , vectorToString( cp.fontColor , toFloat3Decimals ) )
-      setXMLString( xmlFile, tag.."#boxColor"         , vectorToString( cp.boxColor  , toFloat3Decimals ) )
-      setXMLString( xmlFile, tag.."#leftAlignOffset"  , toFloat3Decimals(cp.xTxtL))
-      setXMLString( xmlFile, tag.."#rightAlignOffset" , toFloat3Decimals(cp.xTxtR))
-    end
-    
-    saveXMLFile(xmlFile);
-    delete(xmlFile);
 end    
 
 local function addPreset(name, x,y, w,h, fontSize, fontBold, fontColor, boxColor, leftAlignOff, rightAlignOff, yTxtOff)
@@ -279,67 +271,124 @@ end
 function Compass.loadCompassPresets()
     Compass.compassPresets = {}
 
-    local fileName = g_modsDirectory .. "/" .. "Compass_config.XML";
-    if not fileExists(fileName) then
-      -- Default presets
-      -- TODO: Fix for the different aspect-ratios.
-      addPreset("Default",      0.826,0.127, 0.060,0.020, 0.014, false, {1,1,1,1}, {0,0,0,0.5}, 0.005, 0.005, 0.004)
-      addPreset("BelowClock",   0.803,0.910, 0.060,0.020, 0.014, false, {1,1,1,1}, {0,0,0,0.5}, 0.005, 0.005, 0.004)
-      addPreset("AboveClock",   0.803,0.980, 0.060,0.020, 0.014, false, {1,1,1,1}, {0,0,0,0.5}, 0.005, 0.005, 0.004)
-      addPreset("TopCenter",    0.470,0.980, 0.060,0.020, 0.014, false, {1,1,1,1}, {0,0,0,0.5}, 0.005, 0.005, 0.004)
-    --addPreset("BelowMapLeft", 0.016,0.000, 0.060,0.021, 0.014, false, {1,1,1,1}, {0,0,0,0.5}, 0.005, 0.005, 0.004)
-      addPreset("BelowMapRight",0.112,0.000, 0.060,0.021, 0.014, false, {1,1,1,1}, {0,0,0,0.5}, 0.005, 0.005, 0.004)
-      addPreset("BottomCenter", 0.470,0.000, 0.060,0.020, 0.014, false, {1,1,1,1}, {0,0,0,0.5}, 0.005, 0.005, 0.004)
-      addPreset("BelowSchema",  0.826,0.000, 0.060,0.021, 0.014, false, {1,1,1,1}, {0,0,0,0.5}, 0.005, 0.005, 0.004)
-      addPreset("LeftOfSchema", 0.762,0.021, 0.064,0.028, 0.016, false, {1,1,1,1}, {0,0,0,0.5}, 0.005, 0.005, 0.008)
-      Compass.saveCompassPresets()
-      return
-    end
+    local wasLoaded = false;
 
-    local tag = "compassConfig"
-    local xmlFile = loadXMLFile(tag, fileName, tag)
-    if xmlFile ~= nil then
-      local i = 0
-      while true do
-        tag = ("compassConfig.preset(%d)"):format(i)
-        i=i+1
-        if not hasXMLProperty(xmlFile, tag.."#name") then
-          break
+    -- Make use of the 'ModsSettings'-mod for storing/retrieving the compass presets.
+    if  ModsSettings ~= nil 
+    and ModsSettings.isVersion ~= nil 
+    and ModsSettings.isVersion("0.2.0", "Compass")
+    then
+        local modName = "Compass"
+        local keyName = "config"
+    
+        local selectedPreset = ModsSettings.getStringLocal(modName, keyName, "selectedPreset", "Default")
+        local lastScreenWH   = ModsSettings.getStringLocal(modName, keyName, "lastScreenWH")
+        if lastScreenWH ~= nil then
+            lastScreenWH = { Utils.getVectorFromString(lastScreenWH) }
         end
-      
-        local selected      = getXMLBool(                               xmlFile, tag.."#selected")
-        local name          = getXMLString(                             xmlFile, tag.."#name")
-        local xy            = { Utils.getVectorFromString(getXMLString( xmlFile, tag.."#xyPos")) }
-        local wh            = { Utils.getVectorFromString(getXMLString( xmlFile, tag.."#boxWH")) }
-        local fontSize      = getXMLFloat(                              xmlFile, tag.."#fontSize")
-        local fontBold      = getXMLBool(                               xmlFile, tag.."#fontBold")
-        local fontColor     = { Utils.getVectorFromString(getXMLString( xmlFile, tag.."#fontColor")) }
-        local boxColor      = { Utils.getVectorFromString(getXMLString( xmlFile, tag.."#boxColor"))  }
-        local leftAlignOff  = getXMLFloat(                              xmlFile, tag.."#leftAlignOffset")
-        local rightAlignOff = getXMLFloat(                              xmlFile, tag.."#rightAlignOffset")
         
-        if  table.getn(xy) == 2
-        and table.getn(wh) == 2
-        and table.getn(fontColor) == 4
-        and table.getn(boxColor) == 4
+        if  lastScreenWH ~= nil
+        and lastScreenWH[1] == g_screenWidth
+        and lastScreenWH[2] == g_screenHeight
         then
-          local x,y     = Utils.getNoNil(xy[1],0.826),Utils.getNoNil(xy[2],0.127)
-          local w,h     = Utils.getNoNil(wh[1],0.060),Utils.getNoNil(wh[2],0.020)
-          fontSize      = math.max(0.001, Utils.getNoNil(fontSize, 0.014))
-          fontBold      = fontBold==true
-          leftAlignOff  = math.max(0.001, Utils.getNoNil(leftAlignOff, 0.005))
-          rightAlignOff = math.max(0.001, Utils.getNoNil(rightAlignOff, 0.005))
-          --
-          local yTxtOff = (h/2 - fontSize/2) + (fontSize * 0.1)
-          --
-          addPreset(name, x,y, w,h, fontSize, fontBold, fontColor, boxColor, leftAlignOff, rightAlignOff, yTxtOff)
-          --
-          if selected then
-            Compass.drawFuncIdx = table.getn(Compass.compassPresets);
-          end
+            local i=-1
+            while true do
+                i=i+1
+                keyName = string.format("preset(%d)", i)
+                if not ModsSettings.hasKeyLocal(modName, keyName) then
+                    break
+                end
+                
+                local name          = ModsSettings.getStringLocal(modName, keyName, "name", "NoPresetName")
+                local xy            = { Utils.getVectorFromString(ModsSettings.getStringLocal(modName, keyName, "xyPos")) }
+                local wh            = { Utils.getVectorFromString(ModsSettings.getStringLocal(modName, keyName, "boxWH")) }
+                local leftAlignOff  = ModsSettings.getFloatLocal(modName, keyName, "leftAlignOffset")
+                local rightAlignOff = ModsSettings.getFloatLocal(modName, keyName, "rightAlignOffset")
+                local fontSize      = ModsSettings.getFloatLocal(modName, keyName, "fontSize")
+                local fontBold      = ModsSettings.getBoolLocal( modName, keyName, "fontBold")
+                local fontColor     = { Utils.getVectorFromString(ModsSettings.getStringLocal(modName, keyName, "fontColor")) }
+                local boxColor      = { Utils.getVectorFromString(ModsSettings.getStringLocal(modName, keyName, "boxColor")) }
+
+                if  table.getn(xy) == 2
+                and table.getn(wh) == 2
+                and table.getn(fontColor) == 4
+                and table.getn(boxColor) == 4
+                then
+                    local x,y     = Utils.getNoNil(xy[1],0.826),Utils.getNoNil(xy[2],0.127)
+                    local w,h     = Utils.getNoNil(wh[1],0.060),Utils.getNoNil(wh[2],0.020)
+                    fontSize      = math.max(0.001, Utils.getNoNil(fontSize, 0.014))
+                    fontBold      = fontBold==true
+                    leftAlignOff  = math.max(0.001, Utils.getNoNil(leftAlignOff, 0.005))
+                    rightAlignOff = math.max(0.001, Utils.getNoNil(rightAlignOff, 0.005))
+                    --
+                    local yTxtOff = (h/2 - fontSize/2) + (fontSize * 0.1)
+                    --
+                    addPreset(name, x,y, w,h, fontSize, fontBold, fontColor, boxColor, leftAlignOff, rightAlignOff, yTxtOff)
+                    --
+                    if selectedPreset == name 
+                    or selectedPreset == nil 
+                    then
+                        selectedPreset = name
+                        Compass.drawFuncIdx = table.getn(Compass.compassPresets);
+                    end
+                    --
+                    wasLoaded = true
+                end
+            end
         end
-      end
-      delete(xmlFile)
+    end
+    
+    if not wasLoaded then
+      -- Default presets
+      addPreset("Default",
+        g_currentMission.hudBackgroundOverlay.x,
+        g_currentMission.hudBackgroundOverlay.y + g_currentMission.hudBackgroundOverlay.height,
+        0.060,0.020, 0.014, false, {1,1,1,1}, {0,0,0,0.5}, 0.005, 0.005, 0.004
+      )
+
+      addPreset("BelowClock",   
+        g_currentMission.weatherTimeBackgroundOverlay.x,
+        g_currentMission.weatherTimeBackgroundOverlay.y - 0.020,
+        0.060,0.020, 0.014, false, {1,1,1,1}, {0,0,0,0.5}, 0.005, 0.005, 0.004
+      )
+
+      addPreset("AboveClock",   
+        g_currentMission.weatherTimeBackgroundOverlay.x,
+        g_currentMission.weatherTimeBackgroundOverlay.y + g_currentMission.weatherTimeBackgroundOverlay.height,
+        0.060,1.0 - (g_currentMission.weatherTimeBackgroundOverlay.y + g_currentMission.weatherTimeBackgroundOverlay.height), 0.014, false, {1,1,1,1}, {0,0,0,0.5}, 0.005, 0.005, 0.004
+      )
+
+      addPreset("TopCenter",    
+        0.5 - (0.060 / 2),
+        1.0 - (0.020), 
+        0.060,0.020, 0.014, false, {1,1,1,1}, {0,0,0,0.5}, 0.005, 0.005, 0.004
+      )
+
+      addPreset("BelowMapRight",
+        g_currentMission.ingameMap.mapPosX + g_currentMission.ingameMap.mapWidth - 0.060,
+        0.0,
+        0.060,g_currentMission.ingameMap.mapPosY, 0.014, false, {1,1,1,1}, {0,0,0,0.5}, 0.005, 0.005, 0.004
+      )
+
+      addPreset("BottomCenter", 
+        0.5 - (0.060 / 2),
+        0.000, 
+        0.060,0.020, 0.014, false, {1,1,1,1}, {0,0,0,0.5}, 0.005, 0.005, 0.004
+      )
+      
+      addPreset("BelowSchema",  
+        g_currentMission.hudSelectionBackgroundOverlay.x,
+        0.0,
+        0.060,g_currentMission.hudSelectionBackgroundOverlay.y - 0, 0.014, false, {1,1,1,1}, {0,0,0,0.5}, 0.005, 0.005, 0.004
+      )
+
+      addPreset("LeftOfSchema", 
+        g_currentMission.hudSelectionBackgroundOverlay.x - 0.064,
+        g_currentMission.hudSelectionBackgroundOverlay.y,
+        0.064,g_currentMission.hudSelectionBackgroundOverlay.height, 0.016, false, {1,1,1,1}, {0,0,0,0.5}, 0.005, 0.005, 0.008
+      )
+      
+      Compass.saveCompassPresets()
     end
 end
 
@@ -368,7 +417,6 @@ function Compass:loadMap(name)
      ,g_i18n:getText("west")
      ,g_i18n:getText("northwest")
     };
-
 end;
 
 function Compass:deleteMap()
@@ -376,7 +424,7 @@ function Compass:deleteMap()
         return;
     end
 
-    Compass.saveCompassPresets()
+    --Compass.saveCompassPresets()
 end;
 
 function Compass:mouseEvent(posX, posY, isDown, isUp, button)
@@ -391,10 +439,10 @@ function Compass:update(dt)
     end
 
     if Compass.initializeTimeout > 0 then
-        -- Give time for other mods to override Steerable's draw function.
+        -- Give time for other mods to override Drivable's draw function.
         Compass.initializeTimeout = Compass.initializeTimeout - 1
         if Compass.initializeTimeout <= 0 then
-            Compass:overrideSteerableDraw()
+            Compass:overrideDrivableDraw()
             --
             Compass.loadCompassPresets()
             Compass.drawFuncIdx = math.min(math.max(Utils.getNoNil(Compass.drawFuncIdx, 1), 0), table.getn(Compass.drawFuncs))
@@ -402,6 +450,7 @@ function Compass:update(dt)
     else
         if InputBinding.hasEvent(InputBinding.COMPASS_TOGGLE) then
             Compass.drawFuncIdx = (Compass.drawFuncIdx + 1) % (1+table.getn(Compass.drawFuncs))
+            Compass.saveCompassPresets()
         end;
     end
 end;
@@ -409,8 +458,8 @@ end;
 function Compass:draw()
 end;
 
-function Compass:overrideSteerableDraw()
-    Steerable.draw = Utils.appendedFunction(Steerable.draw, Compass.DrawCompass);
+function Compass:overrideDrivableDraw()
+    Drivable.draw = Utils.appendedFunction(Drivable.draw, Compass.DrawCompass);
 end
 
 function Compass.getDrawFuncName(idx)
@@ -425,10 +474,6 @@ end
 
 --
 Compass.DrawCompass = function(self)
-    if self.motor == nil then  -- Due to FS15 Steerable without Motorized.
-        return;
-    end
-
     if g_currentMission.showHelpText then
         -- Only show in helpbox, if correct key-modifier is pressed (SHIFT/CTRL/ALT), or there is no key-modifier assigned to the InputBinding.COMPASS_TOGGLE
         if (Compass.keyModifier_COMPASS_TOGGLE == nil) or (Input.isKeyPressed(Compass.keyModifier_COMPASS_TOGGLE)) then
@@ -440,14 +485,7 @@ Compass.DrawCompass = function(self)
         local x,y,z = localDirectionToWorld(self.rootNode, 0, 0, 1);
         local length = Utils.vector2Length(x,z);
         if (length ~= 0.0) then -- Try to make sure we do not divide by zero.
-            local direction = math.deg(math.atan2(z/length,x/length)) + 90.0;   -- Rotate clockwise, so north=0, east=90, south=180, west=270.
-            while (direction > 359.999999) do
-                direction = direction - 360.0;
-            end;
-            while (direction < 0.0) do
-                direction = direction + 360.0;
-            end;
-
+            local direction = (math.deg(math.atan2(z/length,x/length)) + 90.0) % 360.0;   -- Rotate clockwise, so north=0, east=90, south=180, west=270.
             Compass.drawFuncs[Compass.drawFuncIdx](direction);
         end;
     end;

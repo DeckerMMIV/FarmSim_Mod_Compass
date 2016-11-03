@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <l10n>
+    <!-- 
+        Please contribute any other translations at 
+        https://github.com/DeckerMMIV/FarmSim_Mod_Compass
+    -->
+
+    <!-- Add your own name or nickname here, when you contribute to this file's translation, so I know who to put into the credits. -->
+    <translationContributors>
+        Ziuta
+    </translationContributors>
+
+    <!-- Note that 'description' is only here for easier translations. I will manually copy it to ModDesc.XML later. -->
     <description>
-<![CDATA[Wyświetla kompas na ekranie.
-
-
-
-Decker_MMIV - fs-uk.com, forum.farming-simulator.com, modhoster.com]]>
+Wyświetla kompas na ekranie.
     </description>
 
     <texts>
-        <text name="COMPASS_TOGGLE"     text="Kompas position" />
+        <text name="COMPASS_TOGGLE"     text="Pozycja kompasu" />
         
         <text name="north"              text="N" />
         <text name="northeast"          text="NE" />
