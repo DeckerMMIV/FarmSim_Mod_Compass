@@ -1,159 +1,62 @@
 --
 -- Compass
 --
--- @author  Decker_MMIV - fs-uk.com, forum.farming-simulator.com, modhoster.com
--- @date    2015-05-xx
+-- @author  Decker_MMIV (DCK)
+-- @contact fs-uk.com, modcentral.co.uk, forum.farming-simulator.com
+-- @date    2016-11-xx
 --
 
 Compass = {};
 --
 local modItem = ModsUtil.findModItemByModName(g_currentModName);
-Compass.version = (modItem and modItem.version) and modItem.version or "?.?.?";
+Compass.version = (modItem and modItem.version) and modItem.version or "?";
 --
-Compass.modDir = g_currentModDirectory;
 Compass.initializeTimeout = 5;
 Compass.drawFuncIdx = 1 -- 0=hidden
 Compass.drawFuncs = {}
+
+
+-- Support-function, that I would like to see be added to InputBinding class.
+-- Maybe it is, I just do not know what its called.
+local function getKeyIdOfModifier(binding)
+    if InputBinding.actions[binding] == nil then
+        return nil;  -- Unknown input-binding.
+    end;
+    if table.getn(InputBinding.actions[binding].keys1) <= 1 then
+        return nil; -- Input-binding has only one or zero keys. (Well, in the keys1 - I'm not checking keys2)
+    end;
+    -- Check if first key in key-sequence is a modifier key (LSHIFT/RSHIFT/LCTRL/RCTRL/LALT/RALT)
+    if Input.keyIdIsModifier[ InputBinding.actions[binding].keys1[1] ] then
+        return InputBinding.actions[binding].keys1[1]; -- Return the keyId of the modifier key
+    end;
+    return nil;
+end
+
+local function toFloat3Decimals(e)
+    return ("%.3f"):format(e)
+end
+
+local function vectorToString(v, formatFunc)
+    local txt = ""
+    local delim = ""
+    if formatFunc == nil then
+        formatFunc = tostring
+    end
+    for _,elem in pairs(v) do
+        txt = txt .. delim .. formatFunc(elem)
+        delim = " "
+    end
+    return txt
+end
+
+--
 
 function Compass.addDrawFunc(func)
     table.insert(Compass.drawFuncs, func)
 end
 
---
-local function drawCompass(compassAngle, props)
-    local worldCornerNum = 1 + (math.floor((compassAngle + 22.5) / 45) % 8);
-    local txt = Compass.worldCorners[worldCornerNum] .. string.format(" %5.1f", compassAngle);
-
-    if props.overlay ~= nil and props.overlay ~= 0 then
-        renderOverlay(props.overlay, props.x,props.y, props.w,props.h);
-    end
-    
-    setTextAlignment(RenderText.ALIGN_RIGHT);
-    setTextBold(false);
-    
-    -- Background text
-    setTextColor(0,0,0,1);
-    renderText(props.x + props.xTxt + props.xShade, props.y + props.yTxt + props.yShade, props.fontSize, txt);
-    -- Foreground text
-    setTextColor(1,1,1,1);
-    renderText(props.x + props.xTxt,                props.y + props.yTxt,                props.fontSize, txt);
-
-    -- Normalise text-styling, because other mods expect it this way.
-    setTextAlignment(RenderText.ALIGN_LEFT);
-    setTextBold(false);
-end
-
---Compass.addDrawFunc( function(compassAngle) drawCompass(compassAngle, { overlay=Compass.hudBlack, x=0.870, y=0.855, w=0.12, h=0.039, fontSize=0.022, xTxt=0.106, yTxt=0.0095, xShade=0.0000, yShade=-0.0010 } ) end );
---Compass.addDrawFunc( function(compassAngle) drawCompass(compassAngle, { overlay=Compass.hudBlack, x=0.790, y=0.820, w=0.12, h=0.039, fontSize=0.022, xTxt=0.106, yTxt=0.0095, xShade=0.0000, yShade=-0.0010 } ) end );
-
---
-local function drawCompass2(compassAngle, props)
-    local worldCornerNum = 1 + (math.floor((compassAngle + 22.5) / 45) % 8);
-    --local txt = Compass.worldCorners[worldCornerNum] .. string.format(" %5.1f", compassAngle);
-
-    if props.overlay ~= nil and props.overlay ~= 0 then
-        renderOverlay(props.overlay, props.x,props.y, props.w,props.h);
-    end
-    
-    setTextColor(1,1,1,1);
-    setTextBold(false);
-    
-    setTextAlignment(RenderText.ALIGN_RIGHT);
-    ---- Background text
-    --setTextColor(0,0,0,1);
-    --renderText(props.x + props.xTxt + props.xShade, props.y + props.yTxt + props.yShade, props.fontSize, txt);
-    -- Foreground text
-    renderText(props.x + props.xTxt,  props.y + props.yTxt, props.fontSize, string.format("%5.1f", compassAngle));
-
-    -- Normalise text-styling, because other mods expect it this way.
-    setTextAlignment(RenderText.ALIGN_LEFT);
-    renderText(props.x + props.xTxtL, props.y + props.yTxt, props.fontSize, Compass.worldCorners[worldCornerNum]);
-end
-
-local function moveableDrawCompass(moveType, compassAngle)
-    -- Moveable compass, for easier placement when developing
-    if Compass.dynamicPosition == nil then
-      Compass.dynamicPosition = {
-        overlay=Compass.hudBlack, 
-        x=0.826, 
-        y=0.127, 
-        w=0.060, 
-        h=0.020, 
-        fontSize=0.014, 
-        xTxtL=0.005,
-        xTxt=0.054, 
-        yTxt=0.005, 
-        --xShade=0.0000, 
-        --yShade=-0.0010,
-        overlayAlpha=0.5
-      };
-    end
-
-    if moveType > 0 then
-        local x,y = 0,0;
-        if InputBinding.isPressed(InputBinding.RUN) then
-            if     InputBinding.isPressed(InputBinding.MENU_UP)    then  y= 1;
-            elseif InputBinding.isPressed(InputBinding.MENU_DOWN)  then  y=-1;
-            end;                                                   
-            if     InputBinding.isPressed(InputBinding.MENU_LEFT)  then  x=-1;
-            elseif InputBinding.isPressed(InputBinding.MENU_RIGHT) then  x= 1;
-            end;
-        else
-            if     InputBinding.hasEvent(InputBinding.MENU_UP)    then  y= 0.1;
-            elseif InputBinding.hasEvent(InputBinding.MENU_DOWN)  then  y=-0.1;
-            end;                                                   
-            if     InputBinding.hasEvent(InputBinding.MENU_LEFT)  then  x=-0.1;
-            elseif InputBinding.hasEvent(InputBinding.MENU_RIGHT) then  x= 0.1;
-            end;
-        end
-        
-        local txt = ""
-        
-        if (moveType == 1) then
-            Compass.dynamicPosition.x = Compass.dynamicPosition.x + (x/100)
-            Compass.dynamicPosition.y = Compass.dynamicPosition.y + (y/100)
-            txt = ("Compass pos.\n%.3f,%.3f"):format(Compass.dynamicPosition.x, Compass.dynamicPosition.y)
-        elseif (moveType == 2) then
-            Compass.dynamicPosition.xTxtL = Compass.dynamicPosition.xTxtL + (x/100)
-            Compass.dynamicPosition.fontSize = Compass.dynamicPosition.fontSize + (y/100)
-            txt = ("Compass txtL-off,fontSize.\n%.3f,%.3f"):format(Compass.dynamicPosition.xTxtL,Compass.dynamicPosition.fontSize)
-        elseif (moveType == 3) then
-            Compass.dynamicPosition.xTxt = Compass.dynamicPosition.xTxt + (x/100)
-            Compass.dynamicPosition.yTxt = Compass.dynamicPosition.yTxt + (y/100)
-            txt = ("Compass txt-off.\n%.3f,%.3f"):format(Compass.dynamicPosition.xTxt, Compass.dynamicPosition.yTxt)
-        elseif (moveType == 4) then
-            Compass.dynamicPosition.w = Compass.dynamicPosition.w + (x/100)
-            Compass.dynamicPosition.h = Compass.dynamicPosition.h + (y/100)
-            txt = ("Compass w/h.\n%.3f,%.3f"):format(Compass.dynamicPosition.w, Compass.dynamicPosition.h)
-        elseif (moveType == 5) then
-            Compass.dynamicPosition.overlayAlpha = Utils.clamp(Compass.dynamicPosition.overlayAlpha + (x/100), 0, 1)
-            setOverlayColor(Compass.dynamicPosition.overlay, 0,0,0,Compass.dynamicPosition.overlayAlpha) -- make it black
-            txt = ("Compass alpha.\n%.3f"):format(Compass.dynamicPosition.overlayAlpha)
-        end
-        
-        setTextColor(1,1,1,1)
-        setTextBold(true)
-        renderText(0.5, 0.5, 0.022, txt);
-    end
-    
-    drawCompass2(compassAngle, Compass.dynamicPosition);
-end
-  
---Compass.addDrawFunc( function(compassAngle) moveableDrawCompass(1, compassAngle) end );
---Compass.addDrawFunc( function(compassAngle) moveableDrawCompass(2, compassAngle) end );
---Compass.addDrawFunc( function(compassAngle) moveableDrawCompass(3, compassAngle) end );
---Compass.addDrawFunc( function(compassAngle) moveableDrawCompass(4, compassAngle) end );
---Compass.addDrawFunc( function(compassAngle) moveableDrawCompass(5, compassAngle) end );
---Compass.addDrawFunc( function(compassAngle) moveableDrawCompass(0, compassAngle) end );
-
---
---
---
-
-
 local function drawCompass3(compassAngle, props)
     local worldCornerNum = 1 + (math.floor((compassAngle + 22.5) / 45) % 8);
-    --local txt = Compass.worldCorners[worldCornerNum] .. string.format(" %5.1f", compassAngle);
 
     if props.overlay ~= nil and props.overlay ~= 0 then
         setOverlayColor(props.overlay, props.boxColor[1], props.boxColor[2], props.boxColor[3], props.boxColor[4])
@@ -173,43 +76,30 @@ local function drawCompass3(compassAngle, props)
     setTextBold(false);
 end
 
-
--- Support-function, that I would like to see be added to InputBinding class.
--- Maybe it is, I just do not know what its called.
-local function getKeyIdOfModifier(binding)
-    if InputBinding.actions[binding] == nil then
-        return nil;  -- Unknown input-binding.
-    end;
-    if table.getn(InputBinding.actions[binding].keys1) <= 1 then
-        return nil; -- Input-binding has only one or zero keys. (Well, in the keys1 - I'm not checking keys2)
-    end;
-    -- Check if first key in key-sequence is a modifier key (LSHIFT/RSHIFT/LCTRL/RCTRL/LALT/RALT)
-    if Input.keyIdIsModifier[ InputBinding.actions[binding].keys1[1] ] then
-        return InputBinding.actions[binding].keys1[1]; -- Return the keyId of the modifier key
-    end;
-    return nil;
-end
-
---
-
-local function toFloat3Decimals(e)
-  return ("%.3f"):format(e)
-end
-
-local function vectorToString(v, formatFunc)
-  local txt = ""
-  local delim = ""
-  if formatFunc == nil then
-    formatFunc = tostring
-  end
-  for _,elem in pairs(v) do
-    txt = txt .. delim .. formatFunc(elem)
-    delim = " "
-  end
-  return txt
+local function addPreset(name, x,y, w,h, fontSize, fontBold, fontColor, boxColor, leftAlignOff, rightAlignOff, yTxtOff)
+    table.insert(Compass.compassPresets,
+        {
+            name=name,
+            overlay=Compass.hudBlack, boxColor=boxColor,
+            x=x, y=y, 
+            w=w, h=h, 
+            fontSize=fontSize, fontBold=fontBold, fontColor=fontColor,
+            xTxtL=leftAlignOff, xTxtR=rightAlignOff, yTxt=yTxtOff
+        }
+    )
+    
+    local presetNum = table.getn(Compass.compassPresets)
+    
+    Compass.addDrawFunc( 
+        function(compassAngle) 
+            drawCompass3(compassAngle, Compass.compassPresets[presetNum])
+        end 
+    )
 end
 
 function Compass.saveCompassPresets()
+-- TODO: Figure out if ModsSettings should/can be upgraded to FS17
+--[[
     -- Make use of the 'ModsSettings'-mod for storing/retrieving the compass presets.
     if  ModsSettings ~= nil 
     and ModsSettings.isVersion ~= nil 
@@ -244,35 +134,16 @@ function Compass.saveCompassPresets()
         ModsSettings.setStringLocal(modName, keyName, "lastScreenWH", ("%d %d"):format(g_screenWidth, g_screenHeight))
         ModsSettings.setStringLocal(modName, keyName, "selectedPreset", selectedPreset)
     end
+--]]    
 end    
-
-local function addPreset(name, x,y, w,h, fontSize, fontBold, fontColor, boxColor, leftAlignOff, rightAlignOff, yTxtOff)
-  table.insert(
-    Compass.compassPresets,
-    {
-      name=name,
-      overlay=Compass.hudBlack, boxColor=boxColor,
-      x=x, y=y, 
-      w=w, h=h, 
-      fontSize=fontSize, fontBold=fontBold, fontColor=fontColor,
-      xTxtL=leftAlignOff, xTxtR=rightAlignOff, yTxt=yTxtOff
-    }
-  );
-  
-  local presetNum = table.getn(Compass.compassPresets)
-  
-  Compass.addDrawFunc( 
-    function(compassAngle) 
-      drawCompass3(compassAngle, Compass.compassPresets[presetNum])
-    end 
-  );
-end
 
 function Compass.loadCompassPresets()
     Compass.compassPresets = {}
 
     local wasLoaded = false;
 
+-- TODO: Figure out if ModsSettings should/can be upgraded to FS17
+--[[
     -- Make use of the 'ModsSettings'-mod for storing/retrieving the compass presets.
     if  ModsSettings ~= nil 
     and ModsSettings.isVersion ~= nil 
@@ -337,58 +208,35 @@ function Compass.loadCompassPresets()
             end
         end
     end
-    
+--]]    
+
     if not wasLoaded then
-      -- Default presets
-      addPreset("Default",
-        g_currentMission.hudBackgroundOverlay.x,
-        g_currentMission.hudBackgroundOverlay.y + g_currentMission.hudBackgroundOverlay.height,
-        0.060,0.020, 0.014, false, {1,1,1,1}, {0,0,0,0.5}, 0.005, 0.005, 0.004
-      )
+        local w,h,fh
 
-      addPreset("BelowClock",   
-        g_currentMission.weatherTimeBackgroundOverlay.x,
-        g_currentMission.weatherTimeBackgroundOverlay.y - 0.020,
-        0.060,0.020, 0.014, false, {1,1,1,1}, {0,0,0,0.5}, 0.005, 0.005, 0.004
-      )
+        --
+        fh = 0.014 * g_uiScale
+        w,h = fh * 5.8 / g_screenAspectRatio, fh * 1.3
+        addPreset("TopCenter",    
+          0.5 - (w / 2), 1.0 - (h), 
+          w, h, 
+          fh, false, 
+          {1,1,1,1}, {0,0,0,0.5}, 
+          0.005, 0.005, fh * 0.3
+        )
 
-      addPreset("AboveClock",   
-        g_currentMission.weatherTimeBackgroundOverlay.x,
-        g_currentMission.weatherTimeBackgroundOverlay.y + g_currentMission.weatherTimeBackgroundOverlay.height,
-        0.060,1.0 - (g_currentMission.weatherTimeBackgroundOverlay.y + g_currentMission.weatherTimeBackgroundOverlay.height), 0.014, false, {1,1,1,1}, {0,0,0,0.5}, 0.005, 0.005, 0.004
-      )
+        --
+        fh = 0.014 * g_uiScale
+        w,h = fh * 5.8 / g_screenAspectRatio, fh * 1.3
+        addPreset("BottomCenter", 
+          0.5 - (w / 2), 0.000, 
+          w, h, 
+          fh, false, 
+          {1,1,1,1}, {0,0,0,0.5}, 
+          0.005, 0.005, fh * 0.3
+        )
 
-      addPreset("TopCenter",    
-        0.5 - (0.060 / 2),
-        1.0 - (0.020), 
-        0.060,0.020, 0.014, false, {1,1,1,1}, {0,0,0,0.5}, 0.005, 0.005, 0.004
-      )
-
-      addPreset("BelowMapRight",
-        g_currentMission.ingameMap.mapPosX + g_currentMission.ingameMap.mapWidth - 0.060,
-        0.0,
-        0.060,g_currentMission.ingameMap.mapPosY, 0.014, false, {1,1,1,1}, {0,0,0,0.5}, 0.005, 0.005, 0.004
-      )
-
-      addPreset("BottomCenter", 
-        0.5 - (0.060 / 2),
-        0.000, 
-        0.060,0.020, 0.014, false, {1,1,1,1}, {0,0,0,0.5}, 0.005, 0.005, 0.004
-      )
-      
-      addPreset("BelowSchema",  
-        g_currentMission.hudSelectionBackgroundOverlay.x,
-        0.0,
-        0.060,g_currentMission.hudSelectionBackgroundOverlay.y - 0, 0.014, false, {1,1,1,1}, {0,0,0,0.5}, 0.005, 0.005, 0.004
-      )
-
-      addPreset("LeftOfSchema", 
-        g_currentMission.hudSelectionBackgroundOverlay.x - 0.064,
-        g_currentMission.hudSelectionBackgroundOverlay.y,
-        0.064,g_currentMission.hudSelectionBackgroundOverlay.height, 0.016, false, {1,1,1,1}, {0,0,0,0.5}, 0.005, 0.005, 0.008
-      )
-      
-      Compass.saveCompassPresets()
+        --
+        Compass.saveCompassPresets()
     end
 end
 
@@ -400,22 +248,22 @@ function Compass:loadMap(name)
     end
 
     if Compass.hudBlack == nil then
-      Compass.keyModifier_COMPASS_TOGGLE = getKeyIdOfModifier(InputBinding.COMPASS_TOGGLE);
-      
-      -- Solid background
-      Compass.hudBlack = createImageOverlay("dataS2/menu/blank.png");
-      setOverlayColor(Compass.hudBlack, 0,0,0,0.5)
+        Compass.keyModifier_COMPASS_TOGGLE = getKeyIdOfModifier(InputBinding.COMPASS_TOGGLE);
+        
+        -- Solid background
+        Compass.hudBlack = createImageOverlay("dataS2/menu/blank.png");
+        setOverlayColor(Compass.hudBlack, 0,0,0,0.5)
     end;
 
     Compass.worldCorners = {
-      g_i18n:getText("north")
-     ,g_i18n:getText("northeast")
-     ,g_i18n:getText("east")
-     ,g_i18n:getText("southeast")
-     ,g_i18n:getText("south") 
-     ,g_i18n:getText("southwest")
-     ,g_i18n:getText("west")
-     ,g_i18n:getText("northwest")
+         g_i18n:getText("north")
+        ,g_i18n:getText("northeast")
+        ,g_i18n:getText("east")
+        ,g_i18n:getText("southeast")
+        ,g_i18n:getText("south") 
+        ,g_i18n:getText("southwest")
+        ,g_i18n:getText("west")
+        ,g_i18n:getText("northwest")
     };
 end;
 
@@ -424,7 +272,7 @@ function Compass:deleteMap()
         return;
     end
 
-    --Compass.saveCompassPresets()
+    Compass.saveCompassPresets()
 end;
 
 function Compass:mouseEvent(posX, posY, isDown, isUp, button)
@@ -442,14 +290,16 @@ function Compass:update(dt)
         -- Give time for other mods to override Drivable's draw function.
         Compass.initializeTimeout = Compass.initializeTimeout - 1
         if Compass.initializeTimeout <= 0 then
-            Compass:overrideDrivableDraw()
+            Compass:appendToDrivableDraw()
             --
             Compass.loadCompassPresets()
-            Compass.drawFuncIdx = math.min(math.max(Utils.getNoNil(Compass.drawFuncIdx, 1), 0), table.getn(Compass.drawFuncs))
+            --Compass.drawFuncIdx = math.min(math.max(Utils.getNoNil(Compass.drawFuncIdx, 1), 0), table.getn(Compass.drawFuncs))
+            Compass.setDrawFuncIdx( Utils.getNoNil(Compass.drawFuncIdx, 1) )
         end
     else
         if InputBinding.hasEvent(InputBinding.COMPASS_TOGGLE) then
-            Compass.drawFuncIdx = (Compass.drawFuncIdx + 1) % (1+table.getn(Compass.drawFuncs))
+            --Compass.drawFuncIdx = (Compass.drawFuncIdx + 1) % (1 + table.getn(Compass.drawFuncs))
+            Compass.setDrawFuncIdx( (Compass.drawFuncIdx + 1) % (1 + table.getn(Compass.drawFuncs)) )
             Compass.saveCompassPresets()
         end;
     end
@@ -458,26 +308,37 @@ end;
 function Compass:draw()
 end;
 
-function Compass:overrideDrivableDraw()
+function Compass:appendToDrivableDraw()
     Drivable.draw = Utils.appendedFunction(Drivable.draw, Compass.DrawCompass);
 end
 
+Compass.drawFuncButtonText = ""
+function Compass.setDrawFuncIdx(drawIdx)
+    Compass.drawFuncIdx = math.min(math.max(drawIdx, 0), table.getn(Compass.drawFuncs))
+    Compass.drawFuncButtonText = g_i18n:getText("COMPASS_TOGGLE") .. Compass.getDrawFuncName(Compass.drawFuncIdx)
+end
+
 function Compass.getDrawFuncName(idx)
-  local name = "unknown";
-  if idx > 0 and idx <= table.getn(Compass.compassPresets) then
-     name = Utils.getNoNil(Compass.compassPresets[idx].name, idx);
-  else
-     name = "hidden";
-  end
-  return " ("..name..")";
+    local name = "???";
+    if idx > 0 and idx <= table.getn(Compass.compassPresets) then
+        name = Utils.getNoNil(Compass.compassPresets[idx].name, idx);
+    elseif idx == 0 then
+        name = g_i18n:getText("Compass_Hidden")
+    end
+    return " ("..name..")";
 end
 
 --
 Compass.DrawCompass = function(self)
-    if g_currentMission.showHelpText then
-        -- Only show in helpbox, if correct key-modifier is pressed (SHIFT/CTRL/ALT), or there is no key-modifier assigned to the InputBinding.COMPASS_TOGGLE
-        if (Compass.keyModifier_COMPASS_TOGGLE == nil) or (Input.isKeyPressed(Compass.keyModifier_COMPASS_TOGGLE)) then
-            g_currentMission:addHelpButtonText(g_i18n:getText("COMPASS_TOGGLE") .. Compass.getDrawFuncName(Compass.drawFuncIdx), InputBinding.COMPASS_TOGGLE);
+    if g_currentMission.missionInfo.showHelpMenu then
+        if Compass.keyModifier_COMPASS_TOGGLE ~= nil then 
+            -- Only show in helpbox, if correct key-modifier is pressed (SHIFT/CTRL/ALT)
+            if Input.isKeyPressed(Compass.keyModifier_COMPASS_TOGGLE) then
+                g_currentMission:addHelpButtonText(Compass.drawFuncButtonText, InputBinding.COMPASS_TOGGLE, nil, GS_PRIO_HIGH);
+            end
+        else
+            -- If no modifier key, then show _with_very_low_priority_
+            g_currentMission:addHelpButtonText(Compass.drawFuncButtonText, InputBinding.COMPASS_TOGGLE, nil, GS_PRIO_VERY_LOW);
         end;
     end;
 
