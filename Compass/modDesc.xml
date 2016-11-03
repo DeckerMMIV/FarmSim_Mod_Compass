@@ -3,7 +3,7 @@
     <author>Decker_MMIV (DCK)</author>
     <authorContact>fs-uk.com, modcentral.co.uk, forum.farming-simulator.com</authorContact>
     
-    <contributors>Gonimy_Vetrom, Ziuta, JakobT</contributors>
+    <contributors>Gonimy_Vetrom, Ziuta, JakobT, Xno</contributors>
 
     <version>1.0.0.17</version>
     
@@ -11,6 +11,7 @@
         <en>Compass </en>
         <de>Kompass </de>
         <fr>Boussole</fr>
+        <it>Bussola </it>
         <pl>Kompas  </pl>
         <ru>Компас  </ru>
     </title>
@@ -31,6 +32,10 @@ Default keys:
 <![CDATA[Affiche une boussole à l'écran.
 ]]>
         </fr>
+		<it>
+<![CDATA[Visualizza sullo schermo una bussola.
+]]>
+        </it>
         <pl>
 <![CDATA[Wyświetla kompas na ekranie.
 ]]>
