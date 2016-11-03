@@ -13,21 +13,27 @@
     <!-- Note that 'description' is only here for easier translations. I will manually copy it to ModDesc.XML later. -->
     <description>
 Displays a compass on the screen.
-    </description>
+
+Default keys:
+  LEFT-ALT C = Toggles preset (top/bottom) or off
+</description>
 
     <texts>
-        <text name="input_COMPASS_TOGGLE"     text="Compass position" />
-        <text name="COMPASS_TOGGLE"           text="Compass position" />
+        <text name="input_COMPASS_TOGGLE"   text="Compass position" />
+        <text name="COMPASS_TOGGLE"         text="Compass position" />
         
-        <text name="Compass_Hidden"           text="Off" />
+        <text name="Compass_Hidden"         text="Off" />
         
-        <text name="north"              text="N" />
-        <text name="northeast"          text="NE" />
-        <text name="east"               text="E" />
-        <text name="southeast"          text="SE" />
-        <text name="south"              text="S" />
-        <text name="southwest"          text="SW" />
-        <text name="west"               text="W" />
-        <text name="northwest"          text="NW" />
+        <text name="Preset_TopCenter"       text="TopCenter"    />
+        <text name="Preset_BottomCenter"    text="BottomCenter" />
+        
+        <text name="north"              text="N"    />
+        <text name="northeast"          text="NE"   />
+        <text name="east"               text="E"    />
+        <text name="southeast"          text="SE"   />
+        <text name="south"              text="S"    />
+        <text name="southwest"          text="SW"   />
+        <text name="west"               text="W"    />
+        <text name="northwest"          text="NW"   />
     </texts>
 </l10n>

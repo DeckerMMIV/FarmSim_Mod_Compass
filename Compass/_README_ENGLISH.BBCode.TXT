@@ -2,6 +2,12 @@
 
 
 [b][u]Changelog[/u][/b]
+1.0.0.18
+- Updated translations
+-- Italian by Xno
+-- Russian by Gonimy-Vetrom
+- Refactored width calculation
+
 1.0.0.17
 - Upgraded to FS17 and changed version-numbering-scheme due to ModHub
 - Fixes with regards to screen aspect ratio
@@ -41,4 +47,4 @@ Credits:
 Script:
 - Decker_MMIV
 Contributors/Translations for this or previous versions:
-- Ziuta, Gonimy_Vetrom, JakobT
+- Ziuta, Gonimy_Vetrom, JakobT, Xno

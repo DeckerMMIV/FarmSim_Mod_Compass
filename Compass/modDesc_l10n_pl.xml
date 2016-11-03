@@ -16,18 +16,21 @@ Wyświetla kompas na ekranie.
     </description>
 
     <texts>
-        <text name="input_COMPASS_TOGGLE"     text="Pozycja kompasu" />
-        <text name="COMPASS_TOGGLE"           text="Pozycja kompasu" />
+        <text name="input_COMPASS_TOGGLE"   text="Pozycja kompasu" />
+        <text name="COMPASS_TOGGLE"         text="Pozycja kompasu" />
+            
+        <text name="Compass_Hidden"         text="Poza" />
+            
+        <text name="Preset_TopCenter"       text="TopCenter"    />  <!-- needs translation -->
+        <text name="Preset_BottomCenter"    text="BottomCenter" />  <!-- needs translation -->
         
-        <text name="Compass_Hidden"           text="Poza" />
-        
-        <text name="north"              text="N" />
-        <text name="northeast"          text="NE" />
-        <text name="east"               text="E" />
-        <text name="southeast"          text="SE" />
-        <text name="south"              text="S" />
-        <text name="southwest"          text="SW" />
-        <text name="west"               text="W" />
-        <text name="northwest"          text="NW" />
+        <text name="north"                  text="N"    />
+        <text name="northeast"              text="NE"   />
+        <text name="east"                   text="E"    />
+        <text name="southeast"              text="SE"   />
+        <text name="south"                  text="S"    />
+        <text name="southwest"              text="SW"   />
+        <text name="west"                   text="W"    />
+        <text name="northwest"              text="NW"   />
     </texts>
 </l10n>

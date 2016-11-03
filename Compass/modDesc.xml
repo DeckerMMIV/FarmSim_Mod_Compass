@@ -2,10 +2,14 @@
 <modDesc descVersion="32">
     <author>Decker_MMIV (DCK)</author>
     <authorContact>fs-uk.com, modcentral.co.uk, forum.farming-simulator.com</authorContact>
-    
+
+<!--
+    NOTE: For contributing translations, DO NOT edit this ModDesc.XML.
+          Only modify the corresponding ModDesc_l10n_*.XML file.
+-->    
     <contributors>Gonimy_Vetrom, Ziuta, JakobT, Xno</contributors>
 
-    <version>1.0.0.17</version>
+    <version>1.0.0.18</version>
     
     <title>
         <en>Compass </en>
@@ -19,20 +23,24 @@
     <description>
         <en>
 <![CDATA[Displays a compass on the screen.
+Support for HUD-scale setting.
 
 Default keys:
   LEFT-ALT C = Toggles preset (top/bottom) or off
 ]]>
         </en>
         <de>
-<![CDATA[Zeigt ein Kompass auf dem Bildschirm.
+<![CDATA[Zeigt einen Kompass an, mit Unterstützung der HUD-scale Einstellung.
+
+Tastenvorbelegung:
+  LINKS-ALT C = Wechselt zwischen der Anzeige (oben/unten) und dem Ausblenden.
 ]]>
         </de>
         <fr>
 <![CDATA[Affiche une boussole à l'écran.
 ]]>
         </fr>
-		<it>
+        <it>
 <![CDATA[Visualizza sullo schermo una bussola.
 ]]>
         </it>

@@ -12,22 +12,25 @@
 
     <!-- Note that 'description' is only here for easier translations. I will manually copy it to ModDesc.XML later. -->
     <description>
-		Visualizza sullo schermo una bussola
+Visualizza sullo schermo una bussola
     </description>
 
     <texts>
-        <text name="input_COMPASS_TOGGLE"     text="Posizione bussola" />
-        <text name="COMPASS_TOGGLE"           text="Posizione bussola" />
+        <text name="input_COMPASS_TOGGLE"   text="Posizione bussola" />
+        <text name="COMPASS_TOGGLE"         text="Posizione bussola" />
+            
+        <text name="Compass_Hidden"         text="Spento" />
+            
+        <text name="Preset_TopCenter"       text="TopCenter"    />  <!-- needs translation -->
+        <text name="Preset_BottomCenter"    text="BottomCenter" />  <!-- needs translation -->
         
-        <text name="Compass_Hidden"           text="Spento" />
-        
-        <text name="north"              text="N" />
-        <text name="northeast"          text="NE" />
-        <text name="east"               text="E" />
-        <text name="southeast"          text="SE" />
-        <text name="south"              text="S" />
-        <text name="southwest"          text="SO" />
-        <text name="west"               text="O" />
-        <text name="northwest"          text="NO" />
+        <text name="north"                  text="N"    />
+        <text name="northeast"              text="NE"   />
+        <text name="east"                   text="E"    />
+        <text name="southeast"              text="SE"   />
+        <text name="south"                  text="S"    />
+        <text name="southwest"              text="SO"   />
+        <text name="west"                   text="O"    />
+        <text name="northwest"              text="NO"   />
     </texts>
 </l10n>

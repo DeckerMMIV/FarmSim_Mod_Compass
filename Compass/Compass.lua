@@ -62,16 +62,16 @@ local function drawCompass3(compassAngle, props)
         setOverlayColor(props.overlay, props.boxColor[1], props.boxColor[2], props.boxColor[3], props.boxColor[4])
         renderOverlay(props.overlay, props.x,props.y, props.w,props.h);
     end
-    
+
     setTextColor(props.fontColor[1],props.fontColor[2],props.fontColor[3],props.fontColor[4]);
     setTextBold(props.fontBold);
-    
+
     setTextAlignment(RenderText.ALIGN_RIGHT);
     renderText(props.x + props.w - props.xTxtR, props.y + props.yTxt, props.fontSize, string.format("%5.1f", compassAngle));
 
     setTextAlignment(RenderText.ALIGN_LEFT);
     renderText(props.x + props.xTxtL,           props.y + props.yTxt, props.fontSize, Compass.worldCorners[worldCornerNum]);
-    
+
     setTextColor(1,1,1,1);
     setTextBold(false);
 end
@@ -81,19 +81,19 @@ local function addPreset(name, x,y, w,h, fontSize, fontBold, fontColor, boxColor
         {
             name=name,
             overlay=Compass.hudBlack, boxColor=boxColor,
-            x=x, y=y, 
-            w=w, h=h, 
+            x=x, y=y,
+            w=w, h=h,
             fontSize=fontSize, fontBold=fontBold, fontColor=fontColor,
             xTxtL=leftAlignOff, xTxtR=rightAlignOff, yTxt=yTxtOff
         }
     )
-    
+
     local presetNum = table.getn(Compass.compassPresets)
-    
-    Compass.addDrawFunc( 
-        function(compassAngle) 
+
+    Compass.addDrawFunc(
+        function(compassAngle)
             drawCompass3(compassAngle, Compass.compassPresets[presetNum])
-        end 
+        end
     )
 end
 
@@ -101,9 +101,9 @@ function Compass.saveCompassPresets()
 -- TODO: Figure out if ModsSettings should/can be upgraded to FS17
 --[[
     -- Make use of the 'ModsSettings'-mod for storing/retrieving the compass presets.
-    if  ModsSettings ~= nil 
-    and ModsSettings.isVersion ~= nil 
-    and ModsSettings.isVersion("0.2.0", "Compass") 
+    if  ModsSettings ~= nil
+    and ModsSettings.isVersion ~= nil
+    and ModsSettings.isVersion("0.2.0", "Compass")
     then
         local modName = "Compass"
         local keyName
@@ -113,7 +113,7 @@ function Compass.saveCompassPresets()
         for _,cp in pairs(Compass.compassPresets) do
             i=i+1
             keyName = ("preset(%d)"):format(i)
-            
+
             ModsSettings.getStringLocal(modName, keyName, "name", cp.name)
             ModsSettings.getStringLocal(modName, keyName, "xyPos", vectorToString( { cp.x, cp.y } , toFloat3Decimals ))
             ModsSettings.getStringLocal(modName, keyName, "boxWH", vectorToString( { cp.w, cp.h } , toFloat3Decimals ))
@@ -123,19 +123,19 @@ function Compass.saveCompassPresets()
             ModsSettings.getBoolLocal(  modName, keyName, "fontBold" , cp.fontBold)
             ModsSettings.getStringLocal(modName, keyName, "fontColor" , vectorToString( cp.fontColor , toFloat3Decimals ))
             ModsSettings.getStringLocal(modName, keyName, "boxColor"  , vectorToString( cp.boxColor  , toFloat3Decimals ))
-            
+
             if i+1 == Compass.drawFuncIdx then
                 selectedPreset = cp.name
             end
         end
-        
+
         keyName = "config"
-        
+
         ModsSettings.setStringLocal(modName, keyName, "lastScreenWH", ("%d %d"):format(g_screenWidth, g_screenHeight))
         ModsSettings.setStringLocal(modName, keyName, "selectedPreset", selectedPreset)
     end
---]]    
-end    
+--]]
+end
 
 function Compass.loadCompassPresets()
     Compass.compassPresets = {}
@@ -145,19 +145,19 @@ function Compass.loadCompassPresets()
 -- TODO: Figure out if ModsSettings should/can be upgraded to FS17
 --[[
     -- Make use of the 'ModsSettings'-mod for storing/retrieving the compass presets.
-    if  ModsSettings ~= nil 
-    and ModsSettings.isVersion ~= nil 
+    if  ModsSettings ~= nil
+    and ModsSettings.isVersion ~= nil
     and ModsSettings.isVersion("0.2.0", "Compass")
     then
         local modName = "Compass"
         local keyName = "config"
-    
+
         local selectedPreset = ModsSettings.getStringLocal(modName, keyName, "selectedPreset", "Default")
         local lastScreenWH   = ModsSettings.getStringLocal(modName, keyName, "lastScreenWH")
         if lastScreenWH ~= nil then
             lastScreenWH = { Utils.getVectorFromString(lastScreenWH) }
         end
-        
+
         if  lastScreenWH ~= nil
         and lastScreenWH[1] == g_screenWidth
         and lastScreenWH[2] == g_screenHeight
@@ -169,7 +169,7 @@ function Compass.loadCompassPresets()
                 if not ModsSettings.hasKeyLocal(modName, keyName) then
                     break
                 end
-                
+
                 local name          = ModsSettings.getStringLocal(modName, keyName, "name", "NoPresetName")
                 local xy            = { Utils.getVectorFromString(ModsSettings.getStringLocal(modName, keyName, "xyPos")) }
                 local wh            = { Utils.getVectorFromString(ModsSettings.getStringLocal(modName, keyName, "boxWH")) }
@@ -196,8 +196,8 @@ function Compass.loadCompassPresets()
                     --
                     addPreset(name, x,y, w,h, fontSize, fontBold, fontColor, boxColor, leftAlignOff, rightAlignOff, yTxtOff)
                     --
-                    if selectedPreset == name 
-                    or selectedPreset == nil 
+                    if selectedPreset == name
+                    or selectedPreset == nil
                     then
                         selectedPreset = name
                         Compass.drawFuncIdx = table.getn(Compass.compassPresets);
@@ -208,31 +208,42 @@ function Compass.loadCompassPresets()
             end
         end
     end
---]]    
+--]]
 
     if not wasLoaded then
-        local w,h,fh
+        local function findMinimumWidth(fontSize, padding)
+            local w = 0
+            for _,txt in pairs(Compass.worldCorners) do
+                w = math.max(w, padding + getTextWidth(fontSize, txt .. " 999.9"))
+            end
+            return w
+        end
+
+        local w,h,fontsize,padding
 
         --
-        fh = 0.014 * g_uiScale
-        w,h = fh * 5.8 / g_screenAspectRatio, fh * 1.3
-        addPreset("TopCenter",    
-          0.5 - (w / 2), 1.0 - (h), 
-          w, h, 
-          fh, false, 
-          {1,1,1,1}, {0,0,0,0.5}, 
-          0.005, 0.005, fh * 0.3
+        fontsize = 0.014 * g_uiScale
+        padding = 0.005
+        w, h = findMinimumWidth(fontsize, padding*2), fontsize * 1.3
+        addPreset(
+            g_i18n:getText("Preset_TopCenter"),
+            0.5 - (w / 2), 1.0 - (h),
+            w, h,
+            fontsize, false,
+            {1,1,1,1}, {0,0,0,0.5},
+            padding, padding, fontsize * 0.3
         )
 
         --
-        fh = 0.014 * g_uiScale
-        w,h = fh * 5.8 / g_screenAspectRatio, fh * 1.3
-        addPreset("BottomCenter", 
-          0.5 - (w / 2), 0.000, 
-          w, h, 
-          fh, false, 
-          {1,1,1,1}, {0,0,0,0.5}, 
-          0.005, 0.005, fh * 0.3
+        fontsize = 0.014 * g_uiScale
+        w, h = findMinimumWidth(fontsize, padding*2), fontsize * 1.3
+        addPreset(
+            g_i18n:getText("Preset_BottomCenter"),
+            0.5 - (w / 2), 0.000,
+            w, h,
+            fontsize, false,
+            {1,1,1,1}, {0,0,0,0.5},
+            padding, padding, fontsize * 0.3
         )
 
         --
@@ -249,7 +260,7 @@ function Compass:loadMap(name)
 
     if Compass.hudBlack == nil then
         Compass.keyModifier_COMPASS_TOGGLE = getKeyIdOfModifier(InputBinding.COMPASS_TOGGLE);
-        
+
         -- Solid background
         Compass.hudBlack = createImageOverlay("dataS2/menu/blank.png");
         setOverlayColor(Compass.hudBlack, 0,0,0,0.5)
@@ -260,7 +271,7 @@ function Compass:loadMap(name)
         ,g_i18n:getText("northeast")
         ,g_i18n:getText("east")
         ,g_i18n:getText("southeast")
-        ,g_i18n:getText("south") 
+        ,g_i18n:getText("south")
         ,g_i18n:getText("southwest")
         ,g_i18n:getText("west")
         ,g_i18n:getText("northwest")
@@ -331,7 +342,7 @@ end
 --
 Compass.DrawCompass = function(self)
     if g_currentMission.missionInfo.showHelpMenu then
-        if Compass.keyModifier_COMPASS_TOGGLE ~= nil then 
+        if Compass.keyModifier_COMPASS_TOGGLE ~= nil then
             -- Only show in helpbox, if correct key-modifier is pressed (SHIFT/CTRL/ALT)
             if Input.isKeyPressed(Compass.keyModifier_COMPASS_TOGGLE) then
                 g_currentMission:addHelpButtonText(Compass.drawFuncButtonText, InputBinding.COMPASS_TOGGLE, nil, GS_PRIO_HIGH);

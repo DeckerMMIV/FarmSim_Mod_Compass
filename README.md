@@ -5,6 +5,12 @@ To read more about this mod, find it on;
 - http://modcentral.co.uk - http://modcentral.co.uk/resources/authors/decker_mmiv.18/
 
 ## FS17 - Change-log
+1.0.0.18
+- Updated translations
+-- Italian by Xno
+-- Russian by Gonimy-Vetrom
+- Refactored width calculation
+
 1.0.0.17
 - Upgraded to FS17 and changed version-numbering-scheme due to ModHub
 - Fixes with regards to screen aspect ratio

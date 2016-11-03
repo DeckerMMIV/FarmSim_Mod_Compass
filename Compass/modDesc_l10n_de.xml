@@ -8,26 +8,33 @@
     <!-- Add your own name or nickname here, when you contribute to this file's translation, so I know who to put into the credits. -->
     <translationContributors>
         JakobT
+        GIANTS Software (ModHub)
     </translationContributors>
 
     <!-- Note that 'description' is only here for easier translations. I will manually copy it to ModDesc.XML later. -->
     <description>
-Zeigt ein Kompass auf dem Bildschirm.
-    </description>
+Zeigt einen Kompass an, mit Unterstützung der HUD-scale Einstellung.
+
+Tastenvorbelegung:
+  LINKS-ALT C = Wechselt zwischen der Anzeige (oben/unten) und dem Ausblenden.
+</description>
 
     <texts>
-        <text name="input_COMPASS_TOGGLE"     text="Kompass position" />
-        <text name="COMPASS_TOGGLE"           text="Kompass position" />
+        <text name="input_COMPASS_TOGGLE"   text="Kompass position" />
+        <text name="COMPASS_TOGGLE"         text="Kompass position" />
         
-        <text name="Compass_Hidden"           text="Aus" />
+        <text name="Compass_Hidden"         text="Aus" />
         
-        <text name="north"              text="N" />
-        <text name="northeast"          text="NO" />
-        <text name="east"               text="O" />
-        <text name="southeast"          text="SO" />
-        <text name="south"              text="S" />
-        <text name="southwest"          text="SW" />
-        <text name="west"               text="W" />
-        <text name="northwest"          text="NW" />
+        <text name="Preset_TopCenter"       text="ObenMitte"    />  <!-- needs translation -->
+        <text name="Preset_BottomCenter"    text="UntenMitte"   />  <!-- needs translation -->
+        
+        <text name="north"                  text="N"    />
+        <text name="northeast"              text="NO"   />
+        <text name="east"                   text="O"    />
+        <text name="southeast"              text="SO"   />
+        <text name="south"                  text="S"    />
+        <text name="southwest"              text="SW"   />
+        <text name="west"                   text="W"    />
+        <text name="northwest"              text="NW"   />
     </texts>
 </l10n>
