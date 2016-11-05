@@ -21,8 +21,8 @@ Visualizza sullo schermo una bussola
             
         <text name="Compass_Hidden"         text="Spento" />
             
-        <text name="Preset_TopCenter"       text="TopCenter"    />  <!-- needs translation -->
-        <text name="Preset_BottomCenter"    text="BottomCenter" />  <!-- needs translation -->
+        <text name="Preset_TopCenter"       text="SopraCentro"    />
+        <text name="Preset_BottomCenter"    text="SottoCentro" />
         
         <text name="north"                  text="N"    />
         <text name="northeast"              text="NE"   />
