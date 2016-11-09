@@ -7,9 +7,9 @@
     NOTE: For contributing translations, DO NOT edit this ModDesc.XML.
           Only modify the corresponding ModDesc_l10n_*.XML file.
 -->    
-    <contributors>Gonimy_Vetrom, Ziuta, JakobT, Xno</contributors>
+    <contributors>Gonimy_Vetrom, Ziuta, JakobT, Xno, huseyinsayar</contributors>
 
-    <version>1.0.0.18</version>
+    <version>1.0.0.19</version>
     
     <title>
         <en>Compass </en>
@@ -18,6 +18,7 @@
         <it>Bussola </it>
         <pl>Kompas  </pl>
         <ru>Компас  </ru>
+        <tr>Pusula  </tr>
     </title>
     
     <description>
@@ -52,6 +53,13 @@ Tastenvorbelegung:
 <![CDATA[Мод выводит на экран компас.
 ]]>
         </ru>
+        <tr>
+<![CDATA[Ekranda bir pusula (yöneç) görüntülenir.
+
+Varsayılan Tuşlar: 
+  LEFT-ALT C = Bastığınızda üstte/allta görebilir ve ya kapatabilirsiniz.
+]]>
+        </tr>
     </description>
 
     <iconFilename>store_Compass.dds</iconFilename>

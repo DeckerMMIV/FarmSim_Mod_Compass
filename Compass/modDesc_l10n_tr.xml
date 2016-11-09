@@ -26,7 +26,7 @@ Varsayılan Tuşlar:
         
         <text name="Preset_TopCenter"       text="ÜstOrta"    />
         <text name="Preset_BottomCenter"    text="AltOrta" />
-		
+
         <text name="north"              text="K" />
         <text name="northeast"          text="KD" />
         <text name="east"               text="D" />
