@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<l10n>
+    <!-- 
+        Please contribute any other translations at 
+        https://github.com/DeckerMMIV/FarmSim_Mod_Compass
+    -->
+
+    <!-- Add your own name or nickname here, when you contribute to this file's translation, so I know who to put into the credits. -->
+    <translationContributors>
+        HSR1979
+    </translationContributors>
+
+    <!-- Note that 'description' is only here for easier translations. I will manually copy it to ModDesc.XML later. -->
+    <description>
+Ekranda bir pusula (yöneç) görüntülenir.
+
+Varsayılan Tuşlar: 
+  LEFT-ALT C = Bastığınızda üstte/allta görebilir ve ya kapatabilirsiniz.
+    </description>
+
+    <texts>
+        <text name="input_COMPASS_TOGGLE"     text="Pusula (Yöneç) Geçişi" />
+        <text name="COMPASS_TOGGLE"           text="Pusula (Yöneç) Geçişi" />
+        
+        <text name="Compass_Hidden"           text="Kapat/Gizle" />
+        
+        <text name="north"              text="K" />
+        <text name="northeast"          text="KD" />
+        <text name="east"               text="D" />
+        <text name="southeast"          text="GD" />
+        <text name="south"              text="G" />
+        <text name="southwest"          text="GB" />
+        <text name="west"               text="B" />
+        <text name="northwest"          text="KB" />
+    </texts>
+</l10n>
