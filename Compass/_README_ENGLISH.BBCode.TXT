@@ -2,6 +2,9 @@
 
 
 [b][u]Changelog[/u][/b]
+1.0.0.20
+- 'g_uiScale' fix due to FS17-patch-1.3.0.0
+
 1.0.0.19
 - New translation added
 -- Turkish by huseyinsayar

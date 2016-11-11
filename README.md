@@ -6,6 +6,9 @@ To read more about this mod, find it on;
 
 
 ## FS17 - Change-log
+1.0.0.20
+- 'g_uiScale' fix due to FS17-patch-1.3.0.0
+
 1.0.0.19
 - New translation added
   - Turkish by huseyinsayar
