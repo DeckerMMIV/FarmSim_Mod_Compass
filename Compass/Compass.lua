@@ -221,8 +221,14 @@ function Compass.loadCompassPresets()
 
         local w,h,fontsize,padding
 
+        -- Due to patch 1.3.0.0
+        local uiScale = 1.0
+        if g_gameSettings ~= nil and g_gameSettings.getValue ~= nil then
+            uiScale = Utils.getNoNil(g_gameSettings:getValue("uiScale"), 1.0)
+        end
+       
         --
-        fontsize = 0.014 * g_uiScale
+        fontsize = 0.014 * uiScale
         padding = 0.005
         w, h = findMinimumWidth(fontsize, padding*2), fontsize * 1.3
         addPreset(
@@ -235,7 +241,7 @@ function Compass.loadCompassPresets()
         )
 
         --
-        fontsize = 0.014 * g_uiScale
+        fontsize = 0.014 * uiScale
         w, h = findMinimumWidth(fontsize, padding*2), fontsize * 1.3
         addPreset(
             g_i18n:getText("Preset_BottomCenter"),
