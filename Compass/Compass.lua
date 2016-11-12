@@ -347,7 +347,8 @@ end
 
 --
 Compass.DrawCompass = function(self)
-    if g_currentMission.missionInfo.showHelpMenu then
+    --if g_currentMission.missionInfo.showHelpMenu then
+    --if g_gameSettings:getValue("showHelpMenu") then
         if Compass.keyModifier_COMPASS_TOGGLE ~= nil then
             -- Only show in helpbox, if correct key-modifier is pressed (SHIFT/CTRL/ALT)
             if Input.isKeyPressed(Compass.keyModifier_COMPASS_TOGGLE) then
@@ -357,7 +358,7 @@ Compass.DrawCompass = function(self)
             -- If no modifier key, then show _with_very_low_priority_
             g_currentMission:addHelpButtonText(Compass.drawFuncButtonText, InputBinding.COMPASS_TOGGLE, nil, GS_PRIO_VERY_LOW);
         end;
-    end;
+    --end;
 
     if self.isEntered and Compass.drawFuncIdx > 0 and self:getIsActive() then
         local x,y,z = localDirectionToWorld(self.rootNode, 0, 0, 1);

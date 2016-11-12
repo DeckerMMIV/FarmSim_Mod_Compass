@@ -2,6 +2,9 @@
 
 
 [b][u]Changelog[/u][/b]
+1.0.1.20
+- Re-upload to ModHub
+
 1.0.0.20
 - 'g_uiScale' fix due to FS17-patch-1.3.0.0
 
@@ -54,4 +57,4 @@ Credits:
 Script:
 - Decker_MMIV
 Contributors/Translations for this or previous versions:
-- Ziuta, Gonimy_Vetrom, JakobT, Xno
+- Ziuta, Gonimy_Vetrom, JakobT, Xno, huseyinsayar, ModHub

@@ -7,9 +7,9 @@
     NOTE: For contributing translations, DO NOT edit this ModDesc.XML.
           Only modify the corresponding ModDesc_l10n_*.XML file.
 -->    
-    <contributors>Gonimy_Vetrom, Ziuta, JakobT, Xno, huseyinsayar</contributors>
+    <contributors>Gonimy_Vetrom, Ziuta, JakobT, Xno, huseyinsayar, ModHub</contributors>
 
-    <version>1.0.0.20</version>
+    <version>1.0.1.20</version>
     
     <title>
         <en>Compass </en>
@@ -23,11 +23,15 @@
     
     <description>
         <en>
-<![CDATA[Displays a compass on the screen.
-Support for HUD-scale setting.
+<![CDATA[Displays a compass on the screen. Support for HUD-scale setting.
 
 Default keys:
   LEFT-ALT C = Toggles preset (top/bottom) or off
+  
+Changelog (version 1.0.1.20)
+- 'g_uiScale' fix due to FS17-patch-1.3.0.0
+- Translations contributed/updated: Turkish, Italian, Russian.
+- Refactored width calculation
 ]]>
         </en>
         <de>
@@ -35,22 +39,50 @@ Default keys:
 
 Tastenvorbelegung:
   LINKS-ALT C = Wechselt zwischen der Anzeige (oben/unten) und dem Ausblenden.
+
+Changelog (version 1.0.1.20)
+- 'g_uiScale' fix due to FS17-patch-1.3.0.0
+- Translations contributed/updated: Turkish, Italian, Russian.
+- Refactored width calculation
 ]]>
         </de>
         <fr>
-<![CDATA[Affiche une boussole à l'écran.
+<![CDATA[Affiche une boussole sur l'écran. Prise en charge de l'échelle HUD.
+
+Touches par défaut:
+  LEFT-ALT C = Bascule le préréglage (haut / bas) ou désactivé
+
+Changelog (version 1.0.1.20)
+- 'g_uiScale' fix due to FS17-patch-1.3.0.0
+- Translations contributed/updated: Turkish, Italian, Russian.
+- Refactored width calculation
 ]]>
         </fr>
         <it>
 <![CDATA[Visualizza sullo schermo una bussola.
+
+Changelog (version 1.0.1.20)
+- 'g_uiScale' fix due to FS17-patch-1.3.0.0
+- Translations contributed/updated: Turkish, Italian, Russian.
+- Refactored width calculation
 ]]>
         </it>
         <pl>
 <![CDATA[Wyświetla kompas na ekranie.
+
+Changelog (version 1.0.1.20)
+- 'g_uiScale' fix due to FS17-patch-1.3.0.0
+- Translations contributed/updated: Turkish, Italian, Russian.
+- Refactored width calculation
 ]]>
         </pl>
         <ru>
 <![CDATA[Мод выводит на экран компас.
+
+Changelog (version 1.0.1.20)
+- 'g_uiScale' fix due to FS17-patch-1.3.0.0
+- Translations contributed/updated: Turkish, Italian, Russian.
+- Refactored width calculation
 ]]>
         </ru>
         <tr>
@@ -58,6 +90,11 @@ Tastenvorbelegung:
 
 Varsayılan Tuşlar: 
   LEFT-ALT C = Bastığınızda üstte/allta görebilir ve ya kapatabilirsiniz.
+
+Changelog (version 1.0.1.20)
+- 'g_uiScale' fix due to FS17-patch-1.3.0.0
+- Translations contributed/updated: Turkish, Italian, Russian.
+- Refactored width calculation
 ]]>
         </tr>
     </description>
