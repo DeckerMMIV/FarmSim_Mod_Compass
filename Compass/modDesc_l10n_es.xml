@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<l10n>
+    <!-- 
+        Please contribute any other translations at 
+        https://github.com/DeckerMMIV/FarmSim_Mod_Compass
+    -->
+
+    <!-- Add your own name or nickname here, when you contribute to this file's translation, so I know who to put into the credits. -->
+    <translationContributors>
+        PromGames
+    </translationContributors>
+
+    <!-- Note that 'description' is only here for easier translations. I will manually copy it to ModDesc.XML later. -->
+    <description>
+Muestra una brújula en la pantalla del juego
+
+Teclas por defecto:
+  Alt_Izquierdo_C = Cambia la configuración por defecto (arriba/abajo o desactivado)
+</description>
+
+    <texts>
+        <text name="input_COMPASS_TOGGLE"   text="Posición de la brújula" />
+        <text name="COMPASS_TOGGLE"         text="Posición de la brújula" />
+        
+        <text name="Compass_Hidden"         text="Ocultar brújula" />
+        
+        <text name="Preset_TopCenter"       text="Arriba en el centro"    />
+        <text name="Preset_BottomCenter"    text="Abajo en el centro" />
+        
+        <text name="north"              text="Norte"    />
+        <text name="northeast"          text="Noreste"   />
+        <text name="east"               text="Este"    />
+        <text name="southeast"          text="Sudeste"   />
+        <text name="south"              text="Sur"    />
+        <text name="southwest"          text="Suroeste"   />
+        <text name="west"               text="Oeste"    />
+        <text name="northwest"          text="Noroeste"   />
+    </texts>
+</l10n>
