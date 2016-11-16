@@ -2,6 +2,10 @@
 
 
 [b][u]Changelog[/u][/b]
+1.0.1.21
+- New translation added:
+-- Spanish by PromGames
+
 1.0.1.20
 - Re-upload to ModHub
 
