@@ -13,16 +13,19 @@
     <!-- Note that 'description' is only here for easier translations. I will manually copy it to ModDesc.XML later. -->
     <description>
 Wyświetla kompas na ekranie.
+
+Domyślne klawisze:
+  Lewy ALT + C = Zmiana położenia (góra/dół) lub ukrycie.
     </description>
 
     <texts>
         <text name="input_COMPASS_TOGGLE"   text="Pozycja kompasu" />
         <text name="COMPASS_TOGGLE"         text="Pozycja kompasu" />
             
-        <text name="Compass_Hidden"         text="Poza" />
+        <text name="Compass_Hidden"         text="Ukryty" />
             
-        <text name="Preset_TopCenter"       text="TopCenter"    />  <!-- needs translation -->
-        <text name="Preset_BottomCenter"    text="BottomCenter" />  <!-- needs translation -->
+        <text name="Preset_TopCenter"       text="Centralnie na górze" />
+        <text name="Preset_BottomCenter"    text="Centralnie na dole" />
         
         <text name="north"                  text="N"    />
         <text name="northeast"              text="NE"   />
