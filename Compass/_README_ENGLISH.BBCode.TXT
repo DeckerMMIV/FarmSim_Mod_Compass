@@ -2,6 +2,9 @@
 
 
 [b][u]Changelog[/u][/b]
+1.0.1.22
+- Polish translation updated by Ziuta
+
 1.0.1.21
 - New translation added:
 -- Spanish by PromGames

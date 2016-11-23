@@ -7,6 +7,9 @@ To read more about this mod, find it on;
 
 
 ## FS17 - Change-log
+1.0.1.22
+- Polish translation updated by Ziuta
+
 1.0.1.21
 - New translation added:
   - Spanish by PromGames

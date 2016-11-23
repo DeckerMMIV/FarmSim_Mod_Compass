@@ -9,7 +9,7 @@
 -->    
     <contributors>Gonimy_Vetrom, Ziuta, JakobT, Xno, huseyinsayar, ModHub, PromGames</contributors>
 
-    <version>1.0.1.21</version>
+    <version>1.0.1.22</version>
     
     <title>
         <en>Compass </en>
@@ -28,8 +28,8 @@
 Default keys:
   LEFT-ALT C = Toggles preset (top/bottom) or off
   
-Changelog (version 1.0.1.21)
-- Translations contributed/updated: Spanish.
+Changelog (version 1.0.1.22)
+- Translations contributed/updated: Spanish, Polish.
 ]]>
         </en>
         <de>
@@ -38,8 +38,8 @@ Changelog (version 1.0.1.21)
 Tastenvorbelegung:
   LINKS-ALT C = Wechselt zwischen der Anzeige (oben/unten) und dem Ausblenden.
 
-Changelog (version 1.0.1.21)
-- Translations contributed/updated: Spanish.
+Changelog (version 1.0.1.22)
+- Translations contributed/updated: Spanish, Polish.
 ]]>
         </de>
         <fr>
@@ -48,29 +48,32 @@ Changelog (version 1.0.1.21)
 Touches par défaut:
   LEFT-ALT C = Bascule le préréglage (haut / bas) ou désactivé
 
-Changelog (version 1.0.1.21)
-- Translations contributed/updated: Spanish.
+Changelog (version 1.0.1.22)
+- Translations contributed/updated: Spanish, Polish.
 ]]>
         </fr>
         <it>
 <![CDATA[Visualizza sullo schermo una bussola.
 
-Changelog (version 1.0.1.21)
-- Translations contributed/updated: Spanish.
+Changelog (version 1.0.1.22)
+- Translations contributed/updated: Spanish, Polish.
 ]]>
         </it>
         <pl>
 <![CDATA[Wyświetla kompas na ekranie.
 
-Changelog (version 1.0.1.21)
-- Translations contributed/updated: Spanish.
+Domyślne klawisze:
+  Lewy ALT + C = Zmiana położenia (góra/dół) lub ukrycie.
+
+Changelog (version 1.0.1.22)
+- Translations contributed/updated: Spanish, Polish.
 ]]>
         </pl>
         <ru>
 <![CDATA[Мод выводит на экран компас.
 
-Changelog (version 1.0.1.21)
-- Translations contributed/updated: Spanish.
+Changelog (version 1.0.1.22)
+- Translations contributed/updated: Spanish, Polish.
 ]]>
         </ru>
         <tr>
@@ -79,8 +82,8 @@ Changelog (version 1.0.1.21)
 Varsayılan Tuşlar: 
   LEFT-ALT C = Bastığınızda üstte/allta görebilir ve ya kapatabilirsiniz.
 
-Changelog (version 1.0.1.21)
-- Translations contributed/updated: Spanish.
+Changelog (version 1.0.1.22)
+- Translations contributed/updated: Spanish, Polish.
 ]]>
         </tr>
         <es>
@@ -89,8 +92,8 @@ Changelog (version 1.0.1.21)
 Teclas por defecto:
   Alt_Izquierdo_C = Cambia la configuración por defecto (arriba/abajo o desactivado)
 
-Changelog (version 1.0.1.21)
-- Translations contributed/updated: Spanish.
+Changelog (version 1.0.1.22)
+- Translations contributed/updated: Spanish, Polish.
 ]]>
         </es>
     </description>
